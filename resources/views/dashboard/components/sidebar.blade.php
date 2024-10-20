@@ -1,0 +1,35 @@
+<!-- Sidebar Start -->
+<div class="sidebar pe-4 pb-3">
+    <nav class="navbar bg-secondary navbar-dark justify-content-center">
+        <div class="d-flex flex-column justify-content-center align-items-center mb-3 mt-1">
+            <a href="index.html" style="width: 100px">
+                <img src="img/logo.png" alt="" style="width: 100px" />
+            </a>
+            <div class="d-flex align-items-center mb-3 mt-4">
+                <div class="position-relative">
+                    <img class="rounded-circle" src="{{ asset('dashboard/img/user.jpg') }}" alt=""
+                        style="width: 40px; height: 40px" />
+                    <div
+                        class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1">
+                    </div>
+                </div>
+                <div class="ms-3">
+                    <h6 class="mb-0">Jhon Doe</h6>
+                    <span>Admin</span>
+                </div>
+            </div>
+        </div>
+        <div class="navbar-nav w-100">
+            <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+            <a href="Users.html" class="nav-item nav-link"><i class="fas fa-users me-2"></i>All users</a>
+            <a href="AllOrders.html" class="nav-item nav-link"><i class="fas fa-boxes me-2"></i>All Order</a>
+            <a href="CurrentOrders.html" class="nav-item nav-link"><i class="fas fa-box me-2"></i>Current Orders</a>
+            <a href="AllContentFilterRequest.html" class="nav-item nav-link"><i class="fas fa-box me-2"></i>All Content
+                Filter Request</a>
+            <a href="AllContentFilterRequest.html" class="nav-item nav-link"><i class="fas fa-box me-2"></i>Current
+                Content Filter Request</a>
+            <a href="Packeges.html" class="nav-item nav-link"><i class="fas fa-box me-2"></i>Packages</a>
+        </div>
+    </nav>
+</div>
+<!-- Sidebar End -->
