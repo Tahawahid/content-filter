@@ -30,14 +30,22 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('frontend.components.footer', 'footer');
 
 
-        // Dashboard Componenets
-        Blade::component('dashboard.components.head', 'd-head');
-        Blade::component('dashboard.components.layout', 'd-layout');
-        Blade::component('dashboard.components.navbar', 'd-navbar');
-        Blade::component('dashboard.components.layout', 'd-layout');
-        Blade::component('dashboard.components.spinner', 'spinner');
-        Blade::component('dashboard.components.sidebar', 'd-sidebar');
-        Blade::component('dashboard.components.foot', 'd-foot');
-        Blade::component('dashboard.components.footer', 'd-footer');
+        //Admin Dashboard Componenets
+        Blade::component('dashboard.admin.components.head', 'd-head');
+        Blade::component('dashboard.admin.components.layout', 'd-layout');
+        Blade::component('dashboard.admin.components.navbar', 'd-navbar');
+        Blade::component('dashboard.admin.components.spinner', 'spinner');
+        Blade::component('dashboard.admin.components.sidebar', 'd-sidebar');
+        Blade::component('dashboard.admin.components.foot', 'd-foot');
+        Blade::component('dashboard.admin.components.footer', 'd-footer');
+
+        // Customer Dashboard Componenets
+        Blade::component('dashboard.client.components.head', 'c-head');
+        Blade::component('dashboard.client.components.layout', 'c-layout');
+        Blade::component('dashboard.client.components.navbar', 'c-navbar');
+        Blade::component('dashboard.client.components.spinner', 'c-spinner');
+        Blade::component('dashboard.client.components.sidebar', 'c-sidebar');
+        Blade::component('dashboard.client.components.foot', 'c-foot');
+        Blade::component('dashboard.client.components.footer', 'c-footer');
     }
 }

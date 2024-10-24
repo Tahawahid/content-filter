@@ -22,7 +22,8 @@
                 <div class="offcanvas-body">
                     <div class="col-md-2">
                         <a class="navbar-brand desktop-navbar-brand" href="/">
-                            <img class="img-fluid" src="{{ asset('assets/img/home2-logo.png') }}" alt="AiLand">
+                            <img class="img-fluid" src="{{ asset('assets/img/LOGO-GRADIANT.png') }}"
+                                alt="ContentFilter.AI">
                         </a>
                     </div>
                     <ul class="navbar-nav mb-2 mb-lg-0 col-md-7 navbar-nav-middle">
@@ -52,10 +53,10 @@
                     </ul>
                     <ul class="navbar-nav mb-2 mb-lg-0 col-md-3 navbar-nav-right">
                         <li class="nav-item">
-                            <x-nav-link href="/sign-up" :active="request()->is('/sign-up')">Sign-up</x-nav-link>
+                            <x-nav-link href="account/sign-up" :active="request()->is('account/sign-up')">Sign-up</x-nav-link>
                         </li>
                         <li class="nav-item">
-                            <x-nav-link href="/sign-in" :active="request()->is('/sign-in')" isButton="true">Login</x-nav-link>
+                            <x-nav-link href="account/sign-in" :active="request()->is('account/sign-in')" isButton="true">Login</x-nav-link>
                         </li>
                     </ul>
                 </div>

@@ -1267,7 +1267,7 @@ button:focus {
 }
 
 .navbar-brand img {
-    height: 37px;
+    height: 100%;
 }
 
 #mainNav {
