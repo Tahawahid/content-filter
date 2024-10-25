@@ -3,7 +3,7 @@
     <nav class="navbar bg-secondary navbar-dark justify-content-center">
         <div class="d-flex flex-column justify-content-center align-items-center mb-3 mt-1">
             <a href="index.html" style="width: 100px">
-                <img src="img/logo.png" alt="" style="width: 100px" />
+                <img src="{{ asset('assets/img/Logo.png') }}" alt="" style="width: 100px" />
             </a>
             <div class="d-flex align-items-center mb-3 mt-4">
                 <div class="position-relative">
@@ -14,8 +14,12 @@
                     </div>
                 </div>
                 <div class="ms-3">
-                    <h6 class="mb-0">Jhon Doe</h6>
-                    <span>Admin</span>
+                    <h6 class="mb-0">
+                        {{ Auth::guard('admin')->user()->name }}
+                    </h6>
+                    <span>
+                        <span class="badge bg-success">Admin</span>
+                    </span>
                 </div>
             </div>
         </div>

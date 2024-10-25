@@ -29,11 +29,7 @@ class AuthController extends Controller
 
         if ($validator->passes()) {
             if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-                if (Auth::user()->role == 'admin') {
-                    return redirect()->route('dashboard.admin.home');
-                } else {
-                    return redirect()->route('dashboard.client.home');
-                }
+                return redirect()->route('dashboard.client.home');
             } else {
                 return redirect()->route('frontend.signIn')->with('error', 'Invalid Credentials');
             }
@@ -55,7 +51,6 @@ class AuthController extends Controller
             $user->name = $request->name;
             $user->email = $request->email;
             $user->password = bcrypt($request->password);
-            $user->role = 0;
             $user->save();
             return redirect()->route('frontend.signIn')->with('success', 'User Registered Successfully');
         } else {

@@ -19,7 +19,7 @@
                             <div class="mb-25 sign-up-top-logo text-center">
                                 <a href="/">
                                     <span class="logo-lg">
-                                        <img src="assets/img/logo-dark.png" alt="">
+                                        <img src="{{ asset('assets/img/Logo-Gradiant-Reverse.png') }}" alt="">
                                     </span>
                                 </a>
                             </div>
