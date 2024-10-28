@@ -1,9 +1,10 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\Admin\PackagesController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +35,7 @@ Route::prefix('account')->group(function () {
 
         Route::group(['middleware' => 'admin.auth'], function () {
             Route::get('/dashboard', [AdminController::class, 'home'])->name('dashboard.admin.home');
+            Route::resource('/packages', PackagesController::class);
             Route::get('/logout', [AdminAuthController::class, 'logout'])->name('dashboard.admin.logout');
         });
     });

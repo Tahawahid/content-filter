@@ -24,7 +24,8 @@
             </div>
         </div>
         <div class="navbar-nav w-100">
-            <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+            <a href="{{ route('dashboard.admin.home') }}" class="nav-item nav-link active"><i
+                    class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
             <a href="Users.html" class="nav-item nav-link"><i class="fas fa-users me-2"></i>All users</a>
             <a href="AllOrders.html" class="nav-item nav-link"><i class="fas fa-boxes me-2"></i>All Order</a>
             <a href="CurrentOrders.html" class="nav-item nav-link"><i class="fas fa-box me-2"></i>Current Orders</a>
@@ -32,7 +33,7 @@
                 Filter Request</a>
             <a href="AllContentFilterRequest.html" class="nav-item nav-link"><i class="fas fa-box me-2"></i>Current
                 Content Filter Request</a>
-            <a href="Packeges.html" class="nav-item nav-link"><i class="fas fa-box me-2"></i>Packages</a>
+            <a href="/account/admin/packages" class="nav-item nav-link"><i class="fas fa-box me-2"></i>Packages</a>
         </div>
     </nav>
 </div>
