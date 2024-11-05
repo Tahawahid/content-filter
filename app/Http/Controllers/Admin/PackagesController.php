@@ -13,8 +13,8 @@ class PackagesController extends Controller
      */
     public function index()
     {
-        //
-        return view('dashboard.admin.package.index');
+        $packages = Package::latest()->get();
+        return view('dashboard.admin.package.index', compact('packages'));
     }
 
     /**
@@ -22,7 +22,6 @@ class PackagesController extends Controller
      */
     public function create()
     {
-        //
         return view('dashboard.admin.package.add');
     }
 
@@ -31,44 +30,77 @@ class PackagesController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'price' => 'required|numeric',
+            'token' => 'required|integer',
+            'features' => 'nullable'
+        ]);
 
-        $package = new Package();
-        $package->name = $request->name;
-        $package->price = $request->price;
-        $package->save();
+        // Decode the JSON string to array
+        $features = json_decode($request->features, true) ?? [];
 
-        return redirect('account/admin/packages');
+        Package::create([
+            'name' => $validated['name'],
+            'price' => $validated['price'],
+            'token' => $validated['token'],
+            'features' => $features
+        ]);
+
+        return redirect()->route('packages.index')
+            ->with('success', 'Package created successfully');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Package $package)
     {
-        //
+        return view('dashboard.admin.package.show', compact('package'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Package $package)
     {
-        //
+        return view('dashboard.admin.package.edit', compact('package'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Package $package)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'price' => 'required|numeric',
+            'token' => 'required|integer',
+            'features' => 'nullable'
+        ]);
+
+        // Decode the JSON string to array
+        $features = json_decode($request->features, true) ?? [];
+
+        $package->update([
+            'name' => $validated['name'],
+            'price' => $validated['price'],
+            'token' => $validated['token'],
+            'features' => $features
+        ]);
+
+        return redirect()->route('packages.index')
+            ->with('success', 'Package updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Package $package)
     {
-        //
+        $package->delete();
+
+        return redirect()->route('packages.index')
+            ->with('success', 'Package deleted successfully');
     }
 }

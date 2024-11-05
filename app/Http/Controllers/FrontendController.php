@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Package;
 use Illuminate\Http\Request;
 
 class FrontendController extends Controller
 {
     public function home()
     {
-        return view('frontend.home');
+        $packages = Package::latest()->get();
+        return view('frontend.home', compact('packages'));
     }
     public function contact()
     {

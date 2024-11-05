@@ -8,6 +8,12 @@
                 </div>
 
             </div>
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
             <div class="table-responsive">
                 <table class="table text-start align-middle table-bordered table-hover mb-0">
                     <thead>
@@ -19,23 +25,44 @@
                             <th scope="col">Package Name</th>
                             <th scope="col">Token</th>
                             <th scope="col">Price</th>
-                            <th scope="col">Status</th>
+                            <th scope="col">Features</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><input class="form-check-input" type="checkbox" /></td>
-                            <td>01 Jan 2045</td>
-                            <td>Diamond</td>
-                            <td>25</td>
-                            <td>$123</td>
-                            <td>Draft</td>
-                            <td>
-                                <a class="btn btn-sm btn-primary" href="">Edit</a>
-                                <a class="btn btn-sm btn-danger" href="">Remove</a>
-                            </td>
-                        </tr>
+                        @forelse($packages as $package)
+                            <tr>
+                                <td><input class="form-check-input" type="checkbox" /></td>
+                                <td>{{ $package->created_at->format('d M Y') }}</td>
+                                <td>{{ $package->name }}</td>
+                                <td>{{ $package->token }}</td>
+                                <td>${{ number_format($package->price, 2) }}</td>
+                                <td>
+                                    @if (empty($package->features) || $package->features === 'null')
+                                        No Features
+                                    @else
+                                        {{ is_array($package->features) ? implode(', ', $package->features) : $package->features }}
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="{{ route('packages.edit', $package->id) }}"
+                                        class="btn btn-sm btn-primary">Edit</a>
+                                    <form action="{{ route('packages.destroy', $package->id) }}" method="POST"
+                                        class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger"
+                                            onclick="return confirm('Are you sure you want to delete this package?')">
+                                            Remove
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="7" class="text-center">No packages found</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

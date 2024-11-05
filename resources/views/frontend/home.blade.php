@@ -413,7 +413,7 @@
         <!-- How It Works Area End -->
 
         <!-- Pricing Area Start -->
-        <section id="pricing" class="pricing-area home-2 bg-secondary section-t-space">
+        {{-- <section id="pricing" class="pricing-area home-2 bg-secondary section-t-space">
             <img src="{{ asset('assets/img/home2-hero-floating-img.png') }}" alt="footer-bg"
                 class="footer-bg-img theme-common-floating-bg-img position-absolute img-fluid">
 
@@ -434,161 +434,136 @@
                             <div class="choose-plan-area">
                                 <div class="pricing-plan-area">
                                     <div class="row price-table-wrap">
-                                        <div class="col-md-6 col-lg-4 mb-25">
-                                            <div class="price-card-item h-100 p-30">
-                                                <h5 class="font-semi-bold text-white">Basic Plan</h5>
-                                                <hr>
-                                                <h2 class="price-title text-white mb-4">$3.99<span
-                                                        class="font-18 font-semi-bold">/m</span></h2>
-                                                <h5 class="font-semi-bold text-white mt-2">What’s included</h5>
-                                                <ul class="pricing-features">
-                                                    <li class="d-flex align-items-center mb-3">
-                                                        <span
-                                                            class="price-check-icon flex-shrink-0 d-inline-flex align-items-center justify-content-center radius-50 me-2">
-                                                        </span>
-                                                        <span class="flex-grow-1">Make make 88 plus text
-                                                            sentence</span>
-                                                    </li>
-                                                    <li class="d-flex align-items-center mb-3">
-                                                        <span
-                                                            class="price-check-icon flex-shrink-0 d-inline-flex align-items-center justify-content-center radius-50 me-2">
-                                                        </span>
-                                                        <span class="flex-grow-1">100+ Ads Integration</span>
-                                                    </li>
-                                                    <li class="d-flex align-items-center mb-3">
-                                                        <span
-                                                            class="price-check-icon flex-shrink-0 d-inline-flex align-items-center justify-content-center radius-50 me-2">
-                                                        </span>
-                                                        <span class="flex-grow-1">Article 150+ sentence</span>
-                                                    </li>
-                                                    <li class="d-flex align-items-center mb-3">
-                                                        <span
-                                                            class="price-check-icon flex-shrink-0 d-inline-flex align-items-center justify-content-center radius-50 me-2">
-                                                        </span>
-                                                        <span class="flex-grow-1">Make make 88 plus text
-                                                            sentence</span>
-                                                    </li>
-                                                    <li class="d-flex align-items-center mb-3">
-                                                        <span
-                                                            class="price-check-icon flex-shrink-0 d-inline-flex align-items-center justify-content-center radius-50 me-2">
-                                                        </span>
-                                                        <span class="flex-grow-1">Blog style editor</span>
-                                                    </li>
-                                                </ul>
-                                                <button type="button" class="theme-btn-outline mt-20 w-100"
-                                                    data-bs-toggle="modal" data-bs-target="#paymentMethodModal"
-                                                    title="Subscribe Now">
-                                                    Subscribe Now
-                                                </button>
+                                        @foreach ($packages as $package)
+                                            <div class="col-md-6 col-lg-4 mb-25">
+                                                <div
+                                                    class="price-card-item h-100 p-30 d-flex flex-column align-items-start justify-content-between">
+                                                    <div class="w-100">
+                                                        <h5 class="font-semi-bold text-white">{{ $package->name }}
+                                                        </h5>
+                                                        <hr>
+                                                        <h2 class="price-title text-white mb-4">
+                                                            ${{ $package->price }}<span
+                                                                class="font-18 font-semi-bold">/m</span></h2>
+                                                        <h5 class="font-semi-bold text-white mt-2">What’s included</h5>
+                                                        <ul class="pricing-features">
+                                                            @foreach ($package->features as $feature)
+                                                                <li class="d-flex align-items-center mb-3">
+                                                                    <span
+                                                                        class="price-check-icon flex-shrink-0 d-inline-flex align-items-center justify-content-center radius-50 me-2"></span>
+                                                                    <span
+                                                                        class="flex-grow-1">{{ $feature }}</span>
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
+                                                    <button type="button" class="theme-btn-outline mt-20 w-100"
+                                                        data-bs-toggle="modal" data-bs-target="#paymentMethodModal"
+                                                        title="Subscribe Now">
+                                                        Subscribe Now
+                                                    </button>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-6 col-lg-4 mb-25">
-                                            <div class="price-card-item h-100 p-30">
-                                                <h5 class="font-semi-bold text-white">Standard Plan</h5>
-                                                <hr>
-                                                <h2 class="price-title text-white mb-4">$10.99<span
-                                                        class="font-18 font-semi-bold">/m</span></h2>
-                                                <h5 class="font-semi-bold text-white mt-2">What’s included</h5>
-                                                <ul class="pricing-features">
-                                                    <li class="d-flex align-items-center mb-3">
-                                                        <span
-                                                            class="price-check-icon flex-shrink-0 d-inline-flex align-items-center justify-content-center radius-50 me-2">
-                                                        </span>
-                                                        <span class="flex-grow-1">Make make 88 plus text
-                                                            sentence</span>
-                                                    </li>
-                                                    <li class="d-flex align-items-center mb-3">
-                                                        <span
-                                                            class="price-check-icon flex-shrink-0 d-inline-flex align-items-center justify-content-center radius-50 me-2">
-                                                        </span>
-                                                        <span class="flex-grow-1">100+ Ads Integration</span>
-                                                    </li>
-                                                    <li class="d-flex align-items-center mb-3">
-                                                        <span
-                                                            class="price-check-icon flex-shrink-0 d-inline-flex align-items-center justify-content-center radius-50 me-2">
-                                                        </span>
-                                                        <span class="flex-grow-1">Article 150+ sentence</span>
-                                                    </li>
-                                                    <li class="d-flex align-items-center mb-3">
-                                                        <span
-                                                            class="price-check-icon flex-shrink-0 d-inline-flex align-items-center justify-content-center radius-50 me-2">
-                                                        </span>
-                                                        <span class="flex-grow-1">Make make 88 plus text
-                                                            sentence</span>
-                                                    </li>
-                                                    <li class="d-flex align-items-center mb-3">
-                                                        <span
-                                                            class="price-check-icon flex-shrink-0 d-inline-flex align-items-center justify-content-center radius-50 me-2">
-                                                        </span>
-                                                        <span class="flex-grow-1">Blog style editor</span>
-                                                    </li>
-                                                </ul>
-                                                <button type="button" class="theme-btn mt-20 w-100"
-                                                    data-bs-toggle="modal" data-bs-target="#paymentMethodModal"
-                                                    title="Subscribe Now">
-                                                    Subscribe Now
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-lg-4 mb-25">
-                                            <div class="price-card-item h-100 p-30">
-                                                <h5 class="font-semi-bold text-white">Premium Plan</h5>
-                                                <hr>
-                                                <h2 class="price-title text-white mb-4">$7.99<span
-                                                        class="font-18 font-semi-bold">/m</span></h2>
-                                                <h5 class="font-semi-bold text-white mt-2">What’s included</h5>
-                                                <ul class="pricing-features">
-                                                    <li class="d-flex align-items-center mb-3">
-                                                        <span
-                                                            class="price-check-icon flex-shrink-0 d-inline-flex align-items-center justify-content-center radius-50 me-2">
-                                                        </span>
-                                                        <span class="flex-grow-1">Make make 88 plus text
-                                                            sentence</span>
-                                                    </li>
-                                                    <li class="d-flex align-items-center mb-3">
-                                                        <span
-                                                            class="price-check-icon flex-shrink-0 d-inline-flex align-items-center justify-content-center radius-50 me-2">
-                                                        </span>
-                                                        <span class="flex-grow-1">100+ Ads Integration</span>
-                                                    </li>
-                                                    <li class="d-flex align-items-center mb-3">
-                                                        <span
-                                                            class="price-check-icon flex-shrink-0 d-inline-flex align-items-center justify-content-center radius-50 me-2">
-                                                        </span>
-                                                        <span class="flex-grow-1">Article 150+ sentence</span>
-                                                    </li>
-                                                    <li class="d-flex align-items-center mb-3">
-                                                        <span
-                                                            class="price-check-icon flex-shrink-0 d-inline-flex align-items-center justify-content-center radius-50 me-2">
-                                                        </span>
-                                                        <span class="flex-grow-1">Make make 88 plus text
-                                                            sentence</span>
-                                                    </li>
-                                                    <li class="d-flex align-items-center mb-3">
-                                                        <span
-                                                            class="price-check-icon flex-shrink-0 d-inline-flex align-items-center justify-content-center radius-50 me-2">
-                                                        </span>
-                                                        <span class="flex-grow-1">Blog style editor</span>
-                                                    </li>
-                                                </ul>
-                                                <button type="button" class="theme-btn-outline mt-20 w-100"
-                                                    data-bs-toggle="modal" data-bs-target="#paymentMethodModal"
-                                                    title="Subscribe Now">
-                                                    Subscribe Now
-                                                </button>
-                                            </div>
-                                        </div>
+                                        @endforeach
                                     </div>
                                 </div>
-
                             </div>
                             <!-- Choose a plan content End -->
                         </div>
                     </div>
                 </div>
             </div>
+        </section> --}}
 
+        <section id="pricing" class="pricing-area home-2 bg-secondary section-t-space">
+            <img src="{{ asset('assets/img/home2-hero-floating-img.png') }}" alt="footer-bg"
+                class="footer-bg-img theme-common-floating-bg-img position-absolute img-fluid">
+
+            <div class="pricing-area-bottom-part position-relative">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="section-title">
+                                <h2 class="section-heading text-white">Want More <span
+                                        class="word-piece-bg">Feature</span>? Try Premium!</h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!-- Choose a plan content Start -->
+                            <div class="choose-plan-area">
+                                <div id="pricingCarousel" class="carousel slide" data-bs-ride="carousel"
+                                    data-bs-interval="3000">
+                                    <div class="carousel-inner">
+                                        @foreach ($packages->chunk(3) as $chunkIndex => $chunk)
+                                            <div class="carousel-item {{ $chunkIndex === 0 ? 'active' : '' }}">
+                                                <div class="row price-table-wrap">
+                                                    @foreach ($chunk as $package)
+                                                        <div class="col-md-6 col-lg-4 mb-25">
+                                                            <div
+                                                                class="price-card-item h-100 p-30 d-flex flex-column align-items-start justify-content-between">
+                                                                <div class="w-100">
+                                                                    <h5 class="font-semi-bold text-white">
+                                                                        {{ $package->name }}</h5>
+                                                                    <hr>
+                                                                    <h2 class="price-title text-white mb-4">
+                                                                        ${{ $package->price }}<span
+                                                                            class="font-18 font-semi-bold">/m</span>
+                                                                    </h2>
+                                                                    <h5 class="font-semi-bold text-white mt-2">What’s
+                                                                        included</h5>
+                                                                    <ul class="pricing-features">
+                                                                        @foreach ($package->features as $feature)
+                                                                            <li class="d-flex align-items-center mb-3">
+                                                                                <span
+                                                                                    class="price-check-icon flex-shrink-0 d-inline-flex align-items-center justify-content-center radius-50 me-2"></span>
+                                                                                <span
+                                                                                    class="flex-grow-1">{{ $feature }}</span>
+                                                                            </li>
+                                                                        @endforeach
+                                                                    </ul>
+                                                                </div>
+                                                                <button type="button"
+                                                                    class="theme-btn-outline mt-20 w-100"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#paymentMethodModal"
+                                                                    title="Subscribe Now">
+                                                                    Subscribe Now
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+
+                                    <!-- Optional carousel controls -->
+                                    @if ($packages->count() > 3)
+                                        <div class="d-flex justify-content-between mt-3">
+                                            <button class="carousel-control-prev" type="button"
+                                                data-bs-target="#pricingCarousel" data-bs-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Previous</span>
+                                            </button>
+                                            <button class="carousel-control-next" type="button"
+                                                data-bs-target="#pricingCarousel" data-bs-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Next</span>
+                                            </button>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                            <!-- Choose a plan content End -->
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
+
         <!-- Pricing Area End -->
 
         <!-- FAQ Area Start -->
