@@ -1,4 +1,4 @@
-<x-c-layout>
+{{-- <x-c-layout>
     <!-- Sale & Revenue Start -->
     <div class="container-fluid pt-4 px-4">
         <div class="row g-4">
@@ -126,4 +126,35 @@
         </div>
     </div>
     <!-- Recent Sales End -->
+</x-c-layout> --}}
+
+<x-c-layout>
+    <div class="container-fluid pt-4 px-4">
+        <div class="bg-secondary rounded p-4">
+            @if ($pending_request)
+                <div class="text-center">
+                    <i class="fa fa-clock fa-4x text-warning mb-3"></i>
+                    <h4>Your Request is Under Review</h4>
+                    <p>Please wait for the confirmation email and call. We'll process your request shortly.</p>
+                </div>
+            @elseif($active_subscription)
+                <div class="text-center">
+                    <i class="fa fa-check-circle fa-4x text-success mb-3"></i>
+                    <h4>Active Subscription</h4>
+                    <p>Current Package: {{ $package_name }}</p>
+                    <p>Remaining Tokens: {{ $tokens_left }}</p>
+                </div>
+            @else
+                <div class="text-center">
+                    <i class="fa fa-info-circle fa-4x text-primary mb-3"></i>
+                    <h4>No Active Subscription</h4>
+                    <p>To access our services, please choose one of our packages or contact us for assistance.</p>
+                    <div class="mt-4">
+                        <a href="{{ route('packages') }}" class="btn btn-primary me-2">View Packages</a>
+                        <a href="{{ route('contact') }}" class="btn btn-outline-primary">Contact Us</a>
+                    </div>
+                </div>
+            @endif
+        </div>
+    </div>
 </x-c-layout>

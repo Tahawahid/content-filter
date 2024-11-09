@@ -172,3 +172,66 @@ Show/Hide Password/ Toggle Password JS
 -----------------------------------*/
 
 })(jQuery); // End of use strict
+
+// Sidebar Cart JS
+function toggleCart() {
+  document.getElementById('cartSidebar').classList.toggle('active');
+}
+
+// Update the add to cart form submission
+document.querySelectorAll('.add-to-cart-form').forEach(form => {
+  form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      fetch(this.action, {
+          method: 'POST',
+          headers: {
+              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+              id: this.querySelector('input[name="id"]').value,
+              name: this.querySelector('input[name="name"]').value,
+              price: this.querySelector('input[name="price"]').value,
+              features: this.querySelector('input[name="features"]').value,
+          })
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (data.success) {
+              toggleCart();
+              updateCartItems(data.cart, data.total);
+          } else {
+              alert('Failed to add item to cart');
+          }
+      });
+  });
+});
+
+function updateCartItems(items, total) {
+  const cartItemsContainer = document.querySelector('.cart-items');
+  cartItemsContainer.innerHTML = '';  // Clear existing items
+
+  if (Object.keys(items).length > 0) {
+      for (const id in items) {
+          const item = items[id];
+          const itemHTML = `
+              <div class="cart-item">
+                  <div class="item-details">
+                      <h5>${item.name}</h5>
+                      <p>$${item.price}</p>
+                  </div>
+              </div>`;
+          cartItemsContainer.insertAdjacentHTML('beforeend', itemHTML);
+      }
+
+      const totalHTML = `<div class="cart-total">
+                              <h5>Total: $${total}</h5>
+                              <a href="/cart" class="theme-btn w-100">View Cart</a>
+                         </div>`;
+      cartItemsContainer.insertAdjacentHTML('beforeend', totalHTML);
+  } else {
+      cartItemsContainer.innerHTML = '<p>Your cart is empty</p>';
+  }
+}

@@ -5,7 +5,7 @@
     <nav class="navbar sticky-header navbar-expand-lg" aria-label="Dark offcanvas navbar" id="mainNav">
         <div class="container">
             <a class="navbar-brand mobile-navbar-brand" href="index.html">
-                <img class="img-fluid" src="{{ asset('assets/img/home2-logo.png') }}" alt="AiLand">
+                <img class="img-fluid" src="{{ asset('assets/img/LOGO-GRADIANT.png') }}" alt="AiLand">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
                 data-bs-target="#offcanvasNavbarDark" aria-controls="offcanvasNavbarDark">
@@ -51,14 +51,37 @@
 
                         </li>
                     </ul>
-                    <ul class="navbar-nav mb-2 mb-lg-0 col-md-3 navbar-nav-right">
-                        <li class="nav-item">
-                            <x-nav-link href="account/sign-up" :active="request()->is('account/sign-up')">Sign-up</x-nav-link>
-                        </li>
-                        <li class="nav-item">
-                            <x-nav-link href="account/sign-in" :active="request()->is('account/sign-in')" isButton="true">Login</x-nav-link>
-                        </li>
-                    </ul>
+                    @guest
+
+
+                        <ul class="navbar-nav mb-2 mb-lg-0 col-md-3 navbar-nav-right">
+                            <li class="nav-item">
+                                <x-nav-link href="account/sign-up" :active="request()->is('account/sign-up')">Sign-up</x-nav-link>
+                            </li>
+                            <li class="nav-item">
+                                <x-nav-link href="account/sign-in" :active="request()->is('account/sign-in')" isButton="true">Login</x-nav-link>
+                            </li>
+                        </ul>
+                    @endguest
+                    @auth
+                        <div class="navbar-nav align-items-center ms-auto">
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                    <img class="rounded-circle me-lg-2" src="{{ asset('dashboard/img/user.jpg') }}"
+                                        alt="" style="width: 40px; height: 40px" />
+                                    <span class="d-none d-lg-inline-flex">Hello, {{ Auth::user()->name }} </span>
+                                </a>
+                                <div
+                                    class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
+                                    <a href="#" class="dropdown-item text-white">My Profile</a>
+                                    <a href="{{ route('dashboard.client.home') }}"
+                                        class="dropdown-item text-white">Dashboard</a>
+                                    <a href="{{ route('frontend.userLogout') }}" class="dropdown-item text-white">Log
+                                        Out</a>
+                                </div>
+                            </div>
+                        </div>
+                    @endauth
                 </div>
             </div>
         </div>

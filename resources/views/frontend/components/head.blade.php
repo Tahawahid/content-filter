@@ -32,6 +32,7 @@
     ===========================================-->
 
     <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{{ asset('dashboard/css/bootstrap.css') }}">
     <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
 
     <link href="{{ asset('assets/css/jquery-ui.min.css') }}" rel="stylesheet">
@@ -55,6 +56,8 @@
 
     <!-- Custom styles for this template -->
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+    {{-- <link rel="stylesheet" href="{{ asset('dashboard/css/style.css') }}"> --}}
+    {{-- <link rel="stylesheet" href="{{ asset('dashboard/css/bootstrap.css') }}"> --}}
 
     <!-- Responsive Css-->
     <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
@@ -72,5 +75,3 @@
         href="{{ asset('assets/img/apple-icon-144x144.png') }}" sizes="144x144">
     <link rel="apple-touch-icon-precomposed" type="image/x-icon" href="{{ asset('assets/img/favicon-16x16.png') }}">
 </head>
-
-<body>

@@ -1,21 +1,4 @@
 /*
--------------------------------------------------
-  Theme Name: AiLand - AI Tools/App Landing HTML5 Responsive Template</title>
-  Theme URL:
-  Author: ayshatech
-  Author URL: 
-  Creation Date: 3-March-2023
-  Description:A default stylesheet for AiLand - AI Tools Landing Template
-  Version: 1.00
-  Primary use: ai, AI, AI landing, Ai landing, ai landing, ai tool langind, text to image, text to speech, voice to text, text to image, text to video, admin dashboard, dashboard, admin panel, ai, AI Writer, ai writer, AI Write, ai write, chatgpt, CHATGPT, Chat gpt, Openai, OpenAI, openai etc.
-
-  ---------------------------------------------------
-  Developed By: ayshatech
-  Developer URL: 
-  Developer: Suraiya Aysha
-
-  ---------------------------------------------------
-
   --------------------------------------------------
   Table of Contents
   --------------------------------------------------
@@ -5804,6 +5787,61 @@ hr {
 }
 
 /* Blog for home 3 end */
+
+/* Cart Sidebar */
+.cart-sidebar {
+    position: fixed;
+    right: -400px;
+    top: 0;
+    width: 400px;
+    height: 100vh;
+    background: #fff;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+    transition: 0.3s;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.cart-sidebar.active {
+    right: 0;
+}
+
+.cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.close-cart {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.remove-btn {
+    background: none;
+    border: none;
+    color: red;
+    cursor: pointer;
+}
+
+.cart-total {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid #eee;
+}
+
+
 
 /* Footer css */
 .home-3 .footer-social ul li a {

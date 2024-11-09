@@ -110,7 +110,6 @@
                                     <h1 class="hero-main-title-left font-medium text-white">On Click Generate <br>
                                         your favorite AI Image or <span class="word-piece-bg">Art</span></h1>
 
-                                    <div><a href="#" class="theme-btn mt-30">Get Free Trial</a></div>
                                 </div>
                             </div>
                         </div>
@@ -283,7 +282,6 @@
                                                     <span class="flex-grow-1">Blog style editor</span>
                                                 </li>
                                             </ul>
-                                            <a href="#" class="theme-btn mt-25">Start 14 days free trial</a>
                                         </div>
                                     </div>
                                 </div>
@@ -340,7 +338,6 @@
                                                     <span class="flex-grow-1">Blog style editor</span>
                                                 </li>
                                             </ul>
-                                            <a href="#" class="theme-btn mt-25">Start 14 days free trial</a>
                                         </div>
                                     </div>
                                 </div>
@@ -397,7 +394,6 @@
                                                     <span class="flex-grow-1">Blog style editor</span>
                                                 </li>
                                             </ul>
-                                            <a href="#" class="theme-btn mt-25">Start 14 days free trial</a>
                                         </div>
                                     </div>
                                 </div>
@@ -476,6 +472,20 @@
         </section> --}}
 
         <section id="pricing" class="pricing-area home-2 bg-secondary section-t-space">
+            @if ($packages->count() > 3)
+                <div class="d-flex justify-content-between mt-3">
+                    <button class="carousel-control-prev" type="button" data-bs-target="#pricingCarousel"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#pricingCarousel"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            @endif
             <img src="{{ asset('assets/img/home2-hero-floating-img.png') }}" alt="footer-bg"
                 class="footer-bg-img theme-common-floating-bg-img position-absolute img-fluid">
 
@@ -493,6 +503,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <!-- Choose a plan content Start -->
+
                             <div class="choose-plan-area">
                                 <div id="pricingCarousel" class="carousel slide" data-bs-ride="carousel"
                                     data-bs-interval="3000">
@@ -512,6 +523,9 @@
                                                                         ${{ $package->price }}<span
                                                                             class="font-18 font-semi-bold">/m</span>
                                                                     </h2>
+                                                                    <h5 class="font-semi-bold text-white mb-4">
+                                                                        Tokens: {{ $package->token }}
+                                                                    </h5>
                                                                     <h5 class="font-semi-bold text-white mt-2">What’s
                                                                         included</h5>
                                                                     <ul class="pricing-features">
@@ -525,13 +539,20 @@
                                                                         @endforeach
                                                                     </ul>
                                                                 </div>
-                                                                <button type="button"
-                                                                    class="theme-btn-outline mt-20 w-100"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target="#paymentMethodModal"
-                                                                    title="Subscribe Now">
-                                                                    Subscribe Now
-                                                                </button>
+                                                                <form action="{{ route('cart.store') }}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    <input type="hidden" name="id"
+                                                                        value="{{ $package->id }}">
+                                                                    <input type="hidden" name="name"
+                                                                        value="{{ $package->name }}">
+                                                                    <input type="hidden" name="price"
+                                                                        value="{{ $package->price }}">
+                                                                    <input type="hidden" name="tokens"
+                                                                        value="{{ $package->token }}">
+                                                                    <button type="submit" class="theme-btn">Add to
+                                                                        Cart</button>
+                                                                </form>
                                                             </div>
                                                         </div>
                                                     @endforeach
@@ -541,20 +562,6 @@
                                     </div>
 
                                     <!-- Optional carousel controls -->
-                                    @if ($packages->count() > 3)
-                                        <div class="d-flex justify-content-between mt-3">
-                                            <button class="carousel-control-prev" type="button"
-                                                data-bs-target="#pricingCarousel" data-bs-slide="prev">
-                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                <span class="visually-hidden">Previous</span>
-                                            </button>
-                                            <button class="carousel-control-next" type="button"
-                                                data-bs-target="#pricingCarousel" data-bs-slide="next">
-                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                <span class="visually-hidden">Next</span>
-                                            </button>
-                                        </div>
-                                    @endif
                                 </div>
                             </div>
                             <!-- Choose a plan content End -->
@@ -838,6 +845,40 @@
             </div>
         </section>
         <!-- Customer Testimonial Area End -->
+
+        {{-- Add to Cart Area Start --}}
+        <!-- Cart Sidebar -->
+        <div class="cart-sidebar" id="cartSidebar">
+            <div class="cart-header">
+                <h4>Shopping Cart</h4>
+                <button class="close-cart" onclick="toggleCart()">×</button>
+            </div>
+            <div class="cart-items">
+                @if (session('cart') && count(session('cart')) > 0)
+                    @foreach (session('cart') as $id => $details)
+                        <div class="cart-item">
+                            <div class="item-details">
+                                <h5>{{ $details['name'] }}</h5>
+                                <p>${{ $details['price'] }}</p>
+                            </div>
+                            {{-- <form action="{{ route('cart.remove', $id) }}" method="POST" class="remove-item">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="remove-btn">×</button>
+                            </form> --}}
+                        </div>
+                    @endforeach
+                    <div class="cart-total">
+                        <h5>Total: ${{ $total ?? 0 }}</h5>
+                        <a href="{{ route('cart.index') }}" class="theme-btn w-100">View Cart</a>
+                    </div>
+                @else
+                    <p>Your cart is empty</p>
+                @endif
+            </div>
+        </div>
+
+        {{-- Add to Cart Area End --}}
 
         <!-- Footer Start -->
         <x-footer></x-footer>

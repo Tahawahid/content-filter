@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('package_descriptions', function (Blueprint $table) {
+        Schema::create('user_tokens', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('package_id')
-                ->constrained('packages')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-            $table->string('description');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('order_id')->constrained()->onDelete('cascade');
+            $table->integer('token');
+            $table->integer('remaining_tokens')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('package_descriptions');
+        Schema::dropIfExists('user_tokens');
     }
 };

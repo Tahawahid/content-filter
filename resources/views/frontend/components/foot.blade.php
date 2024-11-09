@@ -30,7 +30,3 @@
 
 <!-- Custom scripts for this template -->
 <script src="{{ asset('assets/js/custom.js') }}"></script>
-
-</body>
-
-</html>
