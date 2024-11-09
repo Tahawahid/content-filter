@@ -137,12 +137,17 @@
                     <h4>Your Request is Under Review</h4>
                     <p>Please wait for the confirmation email and call. We'll process your request shortly.</p>
                 </div>
-            @elseif($active_subscription)
+            @elseif(!empty($subscriptions))
                 <div class="text-center">
                     <i class="fa fa-check-circle fa-4x text-success mb-3"></i>
-                    <h4>Active Subscription</h4>
-                    <p>Current Package: {{ $package_name }}</p>
-                    <p>Remaining Tokens: {{ $tokens_left }}</p>
+                    <h4>Active Subscriptions</h4>
+                    @foreach ($subscriptions as $subscription)
+                        <div class="mb-3">
+                            <p>Current Package: {{ $subscription['package_name'] }}</p>
+                            <p>Remaining Tokens: {{ $subscription['tokens_left'] }}</p>
+                            <p>Purchase Date: {{ $subscription['purchase_date'] }}</p>
+                        </div>
+                    @endforeach
                 </div>
             @else
                 <div class="text-center">
@@ -150,11 +155,12 @@
                     <h4>No Active Subscription</h4>
                     <p>To access our services, please choose one of our packages or contact us for assistance.</p>
                     <div class="mt-4">
-                        <a href="{{ route('packages') }}" class="btn btn-primary me-2">View Packages</a>
-                        <a href="{{ route('contact') }}" class="btn btn-outline-primary">Contact Us</a>
+                        <a href="{{ route('frontend.home') }}#pricing" class="btn btn-primary me-2">View Packages</a>
+                        <a href="{{ route('frontend.contact') }}" class="btn btn-outline-primary">Contact Us</a>
                     </div>
                 </div>
             @endif
+
         </div>
     </div>
 </x-c-layout>

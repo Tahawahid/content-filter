@@ -18,23 +18,27 @@ class UserController extends Controller
             ->where('status', 'pending')
             ->first();
 
-        $active_subscription = Order::where('user_id', $user->id)
+        $active_subscriptions = Order::where('user_id', $user->id)
             ->where('status', 'active')
-            ->first();
+            ->get();
 
-        $package_name = null;
-        $tokens_left = null;
+        $subscriptions = [];
 
-        if ($active_subscription) {
-            $package_name = $active_subscription->package->name;
-            $tokens_left = $active_subscription->tokens_remaining;
+        foreach ($active_subscriptions as $subscription) {
+            $items = json_decode($subscription->items, true);
+            // Check if the decoded items array has the required keys
+            if (isset($items[0]) && isset($items[0]['name'])) {
+                $subscriptions[] = [
+                    'package_name' => $items[0]['name'],
+                    'tokens_left' => $subscription->tokens_remaining,
+                    'purchase_date' => $subscription->created_at
+                ];
+            }
         }
 
         return view('dashboard.client.home', compact(
             'pending_request',
-            'active_subscription',
-            'package_name',
-            'tokens_left'
+            'subscriptions'
         ));
     }
 }
