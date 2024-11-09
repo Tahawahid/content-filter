@@ -13,17 +13,13 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
-            $table->string('name');
-            $table->string('email');
-            $table->string('phone');
-            $table->string('city');
-            $table->string('state');
-            $table->string('country');
-            $table->string('zipcode');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_detail_id')->constrained()->onDelete('cascade');
+            $table->foreignId('package_id')->constrained()->onDelete('cascade');
+            $table->decimal('price', 10, 2);
+            $table->enum('status', ['pending', 'approved', 'rejected', 'on-hold', 'active', 'cancelled']);
             $table->decimal('total', 10, 2);
-            $table->json('items');
-            $table->string('status');
+            $table->integer('tokens');
             $table->timestamps();
         });
     }

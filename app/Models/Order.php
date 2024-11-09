@@ -11,20 +11,26 @@ class Order extends Model
 
     protected $fillable = [
         'user_id',
-        'name',
-        'email',
-        'phone',
-        'city',
-        'state',
-        'country',
-        'zipcode',
+        'user_detail_id',
+        'package_id',
+        'price',
+        'status',
         'total',
-        'items',
-        'status'
+        'tokens'
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function userDetail()
+    {
+        return $this->belongsTo(UserDetail::class);
+    }
+
+    public function package()
+    {
+        return $this->belongsTo(Package::class);
     }
 }

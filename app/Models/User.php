@@ -59,4 +59,8 @@ class User extends Authenticatable
     {
         return $this->tokens()->sum('remaining_tokens');
     }
+    public function userDetail()
+    {
+        return $this->hasOne(UserDetail::class);
+    }
 }

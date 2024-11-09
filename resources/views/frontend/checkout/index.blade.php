@@ -1,5 +1,10 @@
 <x-layout>
     <div class="container my-5">
+        @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
         <div class="row">
             <div class="col-md-8">
                 <div class="card">
@@ -13,31 +18,52 @@
                                 <label for="name" class="form-label">Name</label>
                                 <input type="text" class="form-control" id="name" name="name"
                                     value="{{ old('name', auth()->user()->name) }}" required>
+                                @error('name')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
                                 <input type="email" class="form-control" id="email" name="email"
                                     value="{{ old('email', auth()->user()->email) }}" required>
+                                @error('email')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="phone" class="form-label">Phone Number</label>
                                 <input type="text" class="form-control" id="phone" name="phone" required>
+                                @error('phone')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="city" class="form-label">City</label>
                                 <input type="text" class="form-control" id="city" name="city" required>
+                                @error('city')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="state" class="form-label">State</label>
                                 <input type="text" class="form-control" id="state" name="state" required>
+                                @error('state')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="country" class="form-label">Country</label>
                                 <input type="text" class="form-control" id="country" name="country" required>
+                                @error('country')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="zipcode" class="form-label">Zipcode</label>
                                 <input type="text" class="form-control" id="zipcode" name="zipcode" required>
+                                @error('zipcode')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <input type="hidden" name="total" value="{{ $total }}">
                             <button type="submit" class="theme-btn">Place Order</button>
@@ -53,15 +79,14 @@
                     <div class="card-body">
                         @foreach ($cartItems as $item)
                             <div class="d-flex justify-content-between mb-2">
-                                <span>{{ $item['name'] }}</span>
+                                <span>{{ $item['name'] }} </span>
                                 <span>${{ $item['price'] }}</span>
                             </div>
                         @endforeach
                         <hr>
                         <div class="d-flex justify-content-between">
-                            <strong>Total:</strong>
+                            <strong>Total: </strong>
                             <strong>${{ $total }}</strong>
-
                         </div>
                     </div>
                 </div>

@@ -131,21 +131,35 @@
 <x-c-layout>
     <div class="container-fluid pt-4 px-4">
         <div class="bg-secondary rounded p-4">
-            @if ($pending_request)
+            {{-- @if ($pending_request)
                 <div class="text-center">
                     <i class="fa fa-clock fa-4x text-warning mb-3"></i>
                     <h4>Your Request is Under Review</h4>
                     <p>Please wait for the confirmation email and call. We'll process your request shortly.</p>
                 </div>
-            @elseif(!empty($subscriptions))
+            @elseif(!empty($active_subscriptions))
                 <div class="text-center">
                     <i class="fa fa-check-circle fa-4x text-success mb-3"></i>
                     <h4>Active Subscriptions</h4>
-                    @foreach ($subscriptions as $subscription)
+                    @php
+                        $items = is_string($subscription['items'])
+                            ? json_decode($subscription['items'], true)
+                            : $subscription['items'];
+                    @endphp
+                    @foreach ($active_subscriptions as $subscription)
                         <div class="mb-3">
-                            <p>Current Package: {{ $subscription['package_name'] }}</p>
-                            <p>Remaining Tokens: {{ $subscription['tokens_left'] }}</p>
+                            <p>Current Package: {{ $items['name'] }}</p>
+                            <p>Remaining Tokens: {{ $user_tokens['remaining_tokens'] }}</p>
                             <p>Purchase Date: {{ $subscription['purchase_date'] }}</p>
+
+                            @if ($items && is_array($items))
+                                <div class="package-features">
+                                    <h5>Package Features:</h5>
+                                    @foreach ($items as $key => $item)
+                                        <p>{{ is_array($item) ? $item['name'] : $item }}</p>
+                                    @endforeach
+                                </div>
+                            @endif
                         </div>
                     @endforeach
                 </div>
@@ -159,8 +173,7 @@
                         <a href="{{ route('frontend.contact') }}" class="btn btn-outline-primary">Contact Us</a>
                     </div>
                 </div>
-            @endif
-
+            @endif --}}
         </div>
     </div>
 </x-c-layout>

@@ -13,6 +13,7 @@ class CartController extends Controller
     public function index()
     {
         $cart = session()->get('cart', []);
+        // dd($cart);
         $total = 0;
         $totalTokens = 0;
 
@@ -51,6 +52,7 @@ class CartController extends Controller
         $cart = session()->get('cart', []);
 
         $cart[$request->id] = [
+            'id' => $request->id,
             'name' => $request->name,
             'price' => floatval($request->price),
             'tokens' => intval($request->tokens),
