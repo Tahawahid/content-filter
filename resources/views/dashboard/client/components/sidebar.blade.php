@@ -19,15 +19,14 @@
             </div>
         </div>
         <div class="navbar-nav w-100">
-            <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-            <a href="Users.html" class="nav-item nav-link"><i class="fas fa-users me-2"></i>All users</a>
-            <a href="AllOrders.html" class="nav-item nav-link"><i class="fas fa-boxes me-2"></i>All Order</a>
-            <a href="CurrentOrders.html" class="nav-item nav-link"><i class="fas fa-box me-2"></i>Current Orders</a>
-            <a href="AllContentFilterRequest.html" class="nav-item nav-link"><i class="fas fa-box me-2"></i>All Content
-                Filter Request</a>
-            <a href="AllContentFilterRequest.html" class="nav-item nav-link"><i class="fas fa-box me-2"></i>Current
-                Content Filter Request</a>
-            <a href="Packeges.html" class="nav-item nav-link"><i class="fas fa-box me-2"></i>Packages</a>
+            <a href="{{ route('dashboard.client.home') }}"
+                class="nav-item nav-link {{ request()->routeIs('dashboard.client.home') ? 'active' : '' }}">
+                <i class="fa fa-tachometer-alt me-2"></i>Dashboard
+            </a>
+            <a href="{{ route('content-filters.index') }}"
+                class="nav-item nav-link {{ request()->routeIs('content-filters.index') ? 'active' : '' }}">
+                <i class="fa fa-tachometer-alt me-2"></i>Send Request
+            </a>
         </div>
     </nav>
 </div>

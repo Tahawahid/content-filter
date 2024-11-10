@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\ContentFilter as AdminContentFilter;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FrontendController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\ContentFilter;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('/')->group(function () {
@@ -34,6 +36,7 @@ Route::prefix('account')->group(function () {
         Route::get('/logout', [AuthController::class, 'logout'])->name('frontend.userLogout');
         Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
         Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+        Route::resource('content-filters', ContentFilter::class);
     });
 
     Route::prefix('admin')->group(function () {
@@ -48,8 +51,11 @@ Route::prefix('account')->group(function () {
             Route::resource('/packages', PackagesController::class);
             Route::get('/logout', [AdminAuthController::class, 'logout'])->name('dashboard.admin.logout');
             // Route::patch('/orders/{order}/approve', [OrderController::class, 'approve'])->name('orders.approve');
+            Route::patch('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
+            Route::get('/orders/today', [OrderController::class, 'todaysOrder'])->name('orders.today');
             Route::resource('/orders', OrderController::class);
             Route::resource('/users', AdminUserController::class);
+            Route::resource('/filter', AdminContentFilter::class);
         });
     });
 });

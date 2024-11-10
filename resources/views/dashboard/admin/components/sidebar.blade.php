@@ -24,20 +24,36 @@
             </div>
         </div>
         <div class="navbar-nav w-100">
-            <a href="{{ route('dashboard.admin.home') }}" class="nav-item nav-link active"><i
-                    class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-            <a href="{{ route('users.index') }}" class="nav-item nav-link"><i class="fas fa-users me-2"></i>All
-                users</a>
-            <a href="{{ route('orders.index') }}" class="nav-item nav-link"><i class="fas fa-boxes me-2"></i>All
-                Order</a>
-            <a href="{{ route('orders.index') }}" class="nav-item nav-link"><i class="fas fa-box me-2"></i>Current
-                Orders</a>
-            <a href="AllContentFilterRequest.html" class="nav-item nav-link"><i class="fas fa-box me-2"></i>All Content
-                Filter Request</a>
-            <a href="AllContentFilterRequest.html" class="nav-item nav-link"><i class="fas fa-box me-2"></i>Current
-                Content Filter Request</a>
-            <a href="/account/admin/packages" class="nav-item nav-link"><i class="fas fa-box me-2"></i>Packages</a>
+            <a href="{{ route('dashboard.admin.home') }}"
+                class="nav-item nav-link {{ request()->routeIs('dashboard.admin.home') ? 'active' : '' }}">
+                <i class="fa fa-tachometer-alt me-2"></i>Dashboard
+            </a>
+            <a href="{{ route('users.index') }}"
+                class="nav-item nav-link {{ request()->routeIs('users.index') ? 'active' : '' }}">
+                <i class="fas fa-users me-2"></i>All users
+            </a>
+            <a href="{{ route('orders.index') }}"
+                class="nav-item nav-link {{ request()->routeIs('orders.index') ? 'active' : '' }}">
+                <i class="fas fa-boxes me-2"></i>All Order
+            </a>
+            <a href="{{ route('orders.today') }}"
+                class="nav-item nav-link {{ request()->routeIs('orders.today') ? 'active' : '' }}">
+                <i class="fas fa-box me-2"></i>Current Orders
+            </a>
+            <a href="{{ route('filter.index') }}"
+                class="nav-item nav-link {{ request()->is('filter.index') ? 'active' : '' }}">
+                <i class="fas fa-box me-2"></i>All Content Filter Request
+            </a>
+            <a href="AllContentFilterRequest.html"
+                class="nav-item nav-link {{ request()->is('AllContentFilterRequest.html') ? 'active' : '' }}">
+                <i class="fas fa-box me-2"></i>Current Content Filter Request
+            </a>
+            <a href="/account/admin/packages"
+                class="nav-item nav-link {{ request()->is('account/admin/packages') ? 'active' : '' }}">
+                <i class="fas fa-box me-2"></i>Packages
+            </a>
         </div>
+
     </nav>
 </div>
 <!-- Sidebar End -->

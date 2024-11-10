@@ -8,11 +8,11 @@
                 <table class="table text-start align-middle table-bordered table-hover mb-0">
                     <thead>
                         <tr>
-                            <th scope="col">User Name</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Phone</th>
-                            <th scope="col">Active Package</th>
-                            <th scope="col">Remaining Tokens</th>
+                            <th scope="col" class="text-white">User Name</th>
+                            <th scope="col" class="text-white">Email</th>
+                            <th scope="col" class="text-white">Phone</th>
+                            <th scope="col" class="text-white">Active Package</th>
+                            <th scope="col" class="text-white">Remaining Tokens</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -40,7 +40,7 @@
 
             </div>
             <div class="mt-4">
-                {{ $users->links() }}
+                {{ $users->links('pagination::bootstrap-5') }}
             </div>
         </div>
     </div>

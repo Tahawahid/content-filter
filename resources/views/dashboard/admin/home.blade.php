@@ -47,7 +47,7 @@
         <div class="bg-secondary text-center rounded p-4">
             <div class="d-flex align-items-center justify-content-between mb-4">
                 <h6 class="mb-0">Recent Order</h6>
-                <a href="">Show All</a>
+                <a href="{{ route('orders.index') }}">Show All</a>
             </div>
             <div class="table-responsive">
                 <table class="table text-start align-middle table-bordered table-hover mb-0">
@@ -87,7 +87,7 @@
                     </tbody>
                 </table>
             </div>
-
+            
         </div>
     </div>
     <!-- Recent Sales End -->

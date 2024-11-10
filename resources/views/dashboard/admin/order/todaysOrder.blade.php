@@ -2,7 +2,7 @@
     <div class="container-fluid pt-4 px-4">
         <div class="bg-secondary text-center rounded p-4">
             <div class="d-flex align-items-center justify-content-between mb-4">
-                <h6 class="mb-0">All Orders</h6>
+                <h6 class="mb-0">Today's Orders</h6>
             </div>
             <div class="table-responsive">
                 <table class="table text-start align-middle table-bordered table-hover mb-0">
@@ -12,7 +12,6 @@
                             <th scope="col">Invoice</th>
                             <th scope="col">Customer</th>
                             <th scope="col">Phone</th>
-                            {{-- <th scope="col">Email</th> --}}
                             <th scope="col">Package</th>
                             <th scope="col">Tokens</th>
                             <th scope="col">Amount</th>
@@ -27,7 +26,6 @@
                                 <td>ORD-{{ $order->id }}</td>
                                 <td>{{ $order->userDetail->name ?? 'N/A' }}</td>
                                 <td>{{ $order->userDetail->phone_number }}</td>
-                                {{-- <td>{{ $order->userDetail->email }}</td> --}}
                                 <td>{{ $order->package->name }}</td>
                                 <td>{{ $order->tokens }}</td>
                                 <td>${{ $order->total }}</td>
@@ -35,17 +33,14 @@
                                     <select class="form-select bg-dark text-white status-select"
                                         data-order-id="{{ $order->id }}" onchange="updateStatus(this)">
                                         <option value="pending" {{ $order->status === 'pending' ? 'selected' : '' }}>
-                                            Pending</option>
+                                            Pending
+                                        </option>
                                         <option value="approved" {{ $order->status === 'approved' ? 'selected' : '' }}>
-                                            Approved</option>
+                                            Approved
+                                        </option>
                                         <option value="rejected" {{ $order->status === 'rejected' ? 'selected' : '' }}>
-                                            Rejected</option>
-                                        <option value="approved" {{ $order->status === 'on-hold' ? 'selected' : '' }}>
-                                            On Hold</option>
-                                        <option value="approved" {{ $order->status === 'active' ? 'selected' : '' }}>
-                                            Active</option>
-                                        <option value="pending" {{ $order->status === 'cancelled' ? 'selected' : '' }}>
-                                            Cancelled</option>
+                                            Rejected
+                                        </option>
                                     </select>
                                 </td>
                                 <td>
@@ -115,34 +110,3 @@
         </script>
     @endpush
 </x-d-layout>
-
-
-<script>
-    function updateStatus(selectElement) {
-        const orderId = selectElement.getAttribute('data-order-id');
-        const selectedStatus = selectElement.value;
-
-        fetch(`/account/admin/orders/${orderId}/status`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({
-                    status: selectedStatus
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Status updated successfully');
-                } else {
-                    alert('Failed to update status');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred while updating status');
-            });
-    }
-</script>

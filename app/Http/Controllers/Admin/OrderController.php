@@ -8,6 +8,7 @@ use App\Models\UserToken;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
@@ -78,23 +79,138 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
+    // public function update(Request $request, Order $order)
+    // {
+    //     $status = $request->status;
+    //     $order->update(['status' => $status]);
+
+    //     if ($status === 'active') {
+
+    //         UserToken::create([
+    //             'user_id' => $order->user_id,
+    //             'order_id' => $order->id,
+    //             'token' => $order->tokens,
+    //             'remaining_tokens' => $order->tokens,
+    //         ]);
+    //     }
+
+    //     return back()->with('success', 'Order status updated successfully');
+    // }
+
+    // public function update(Request $request, Order $order)
+    // {
+    //     // Validate input
+    //     $request->validate([
+    //         'status' => 'required|string|in:pending,approved,active,rejected,on-hold,cancelled',
+    //         'tokens' => 'nullable|integer|min:0',
+    //         'price' => 'nullable|numeric|min:0',
+    //     ]);
+
+    //     // Update the status if it's provided
+    //     if ($request->has('status')) {
+    //         $order->update(['status' => $request->status]);
+    //     }
+
+    //     // Update tokens and price if provided
+    //     if ($request->has('tokens')) {
+    //         $order->update(['tokens' => $request->tokens]);
+    //     }
+
+    //     if ($request->has('price')) {
+    //         $order->update(['total' => $request->price]);
+    //     }
+
+    //     // Check if the status is 'active' and handle the UserToken
+    //     if ($request->status === 'active') {
+    //         // Check if a UserToken already exists for this user and order
+    //         $userToken = UserToken::where('user_id', $order->user_id)
+    //             ->where('order_id', $order->id)
+    //             ->first();
+
+    //         if (!$userToken) {
+    //             // If the UserToken doesn't exist, create a new one
+    //             UserToken::create([
+    //                 'user_id' => $order->user_id,
+    //                 'order_id' => $order->id,
+    //                 'token' => $order->tokens,
+    //                 'remaining_tokens' => $order->tokens,
+    //             ]);
+    //         } else {
+    //             // If the UserToken exists, update it with the new token count
+    //             $userToken->update([
+    //                 'token' => $order->tokens,
+    //                 'remaining_tokens' => $order->tokens,
+    //             ]);
+    //         }
+    //     }
+    // }
+
     public function update(Request $request, Order $order)
     {
-        $status = $request->status;
-        $order->update(['status' => $status]);
+        // Validate input
+        $request->validate([
+            'status' => 'required|string|in:pending,approved,active,rejected,on-hold,cancelled',
+            'tokens' => 'nullable|integer|min:0',
+            'price' => 'nullable|numeric|min:0',
+        ]);
 
-        if ($status === 'active') {
+        // Begin transaction to prevent partial updates
+        DB::beginTransaction();
 
-            UserToken::create([
-                'user_id' => $order->user_id,
-                'order_id' => $order->id,
-                'token' => $order->tokens,
-                'remaining_tokens' => $order->tokens,
-            ]);
+        try {
+            // Update the status if it's provided
+            if ($request->has('status')) {
+                $order->update(['status' => $request->status]);
+            }
+
+            // Update tokens and price if provided
+            if ($request->has('tokens')) {
+                $order->update(['tokens' => $request->tokens]);
+            }
+
+            if ($request->has('price')) {
+                $order->update(['total' => $request->price]);
+            }
+
+            // Check if the status is 'active' and handle the UserToken
+            if ($request->status === 'active') {
+                // Check if a UserToken already exists for this user and order
+                $userToken = UserToken::where('user_id', $order->user_id)
+                    ->where('order_id', $order->id)
+                    ->first();
+
+                if (!$userToken) {
+                    // If the UserToken doesn't exist, create a new one
+                    UserToken::create([
+                        'user_id' => $order->user_id,
+                        'order_id' => $order->id,
+                        'token' => $order->tokens,
+                        'remaining_tokens' => $order->tokens,
+                    ]);
+                } else {
+                    // If the UserToken exists, update it with the new token count
+                    $userToken->update([
+                        'token' => $order->tokens,
+                        'remaining_tokens' => $order->tokens,
+                    ]);
+                }
+            }
+
+            // Commit the transaction if everything is fine
+            DB::commit();
+
+            return back()->with('success', 'Order updated successfully');
+        } catch (\Exception $e) {
+            // Rollback the transaction if there's an error
+            DB::rollBack();
+
+            // Log the error message
+            Log::error('Order update failed: ' . $e->getMessage());
+
+            return back()->with('error', 'Something went wrong. Please try again.');
         }
-
-        return back()->with('success', 'Order status updated successfully');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -103,5 +219,30 @@ class OrderController extends Controller
     {
         $order->delete();
         return redirect()->route('admin.orders.index')->with('success', 'Order deleted successfully');
+    }
+
+
+    public function updateStatus(Request $request, $id)
+    {
+        $updated = DB::table('orders')
+            ->where('id', $id)
+            ->update(['status' => $request->status]);
+
+        info("Status update for order {$id} to {$request->status}: " . ($updated ? "Success" : "Failure"));
+
+        return response()->json([
+            'success' => (bool) $updated,
+            'message' => $updated ? 'Status updated successfully' : 'Failed to update status'
+        ]);
+    }
+
+    public function todaysOrder()
+    {
+        $orders = Order::with(['userDetail', 'package'])
+            ->where('created_at', '>=', now()->subHours(36))
+            ->latest()
+            ->paginate(10);
+
+        return view('dashboard.admin.order.todaysOrder', compact('orders'));
     }
 }
