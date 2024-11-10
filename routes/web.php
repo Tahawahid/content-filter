@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\PackagesController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('/')->group(function () {
@@ -48,6 +49,7 @@ Route::prefix('account')->group(function () {
             Route::get('/logout', [AdminAuthController::class, 'logout'])->name('dashboard.admin.logout');
             // Route::patch('/orders/{order}/approve', [OrderController::class, 'approve'])->name('orders.approve');
             Route::resource('/orders', OrderController::class);
+            Route::resource('/users', AdminUserController::class);
         });
     });
 });

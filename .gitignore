@@ -21,3 +21,5 @@ yarn-error.log
 /.vscode
 /.zed
 *.txt
+app.zip
+content-filter.zip

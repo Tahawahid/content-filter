@@ -1,55 +1,111 @@
 <x-d-layout>
-    <div class="container-fluid">
-        <h1 class="h3 mb-2 text-gray-800">Orders</h1>
-        <div class="card shadow mb-4">
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
+    <div class="container-fluid pt-4 px-4">
+        <div class="bg-secondary text-center rounded p-4">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <h6 class="mb-0">All Orders</h6>
+            </div>
+            <div class="table-responsive">
+                <table class="table text-start align-middle table-bordered table-hover mb-0">
+                    <thead>
+                        <tr class="text-white">
+                            <th scope="col">Date</th>
+                            <th scope="col">Invoice</th>
+                            <th scope="col">Customer</th>
+                            <th scope="col">Phone</th>
+                            {{-- <th scope="col">Email</th> --}}
+                            <th scope="col">Package</th>
+                            <th scope="col">Tokens</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($orders as $order)
                             <tr>
-                                <th>Order ID</th>
-                                <th>Customer</th>
-                                <th>Total</th>
-                                <th>Tokens</th>
-                                <th>Status</th>
-                                <th>Actions</th>
+                                <td>{{ $order->created_at->format('d M Y') }}</td>
+                                <td>ORD-{{ $order->id }}</td>
+                                <td>{{ $order->userDetail->name ?? 'N/A' }}</td>
+                                <td>{{ $order->userDetail->phone_number }}</td>
+                                {{-- <td>{{ $order->userDetail->email }}</td> --}}
+                                <td>{{ $order->package->name }}</td>
+                                <td>{{ $order->tokens }}</td>
+                                <td>${{ $order->total }}</td>
+                                <td>
+                                    <select class="form-select bg-dark text-white status-select"
+                                        data-order-id="{{ $order->id }}" onchange="updateStatus(this)">
+                                        <option value="pending" {{ $order->status === 'pending' ? 'selected' : '' }}>
+                                            Pending</option>
+                                        <option value="approved" {{ $order->status === 'active' ? 'selected' : '' }}>
+                                            Approved</option>
+                                        <option value="rejected" {{ $order->status === 'rejected' ? 'selected' : '' }}>
+                                            Rejected</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <a href="{{ route('orders.show', $order->id) }}"
+                                        class="btn btn-sm btn-info">View</a>
+                                    <button onclick="deleteOrder({{ $order->id }})"
+                                        class="btn btn-sm btn-danger">Delete</button>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($orders as $order)
-                                <tr>
-                                    <td>{{ $order->id }}</td>
-                                    <td>{{ $order->user->name }}</td>
-                                    <td>${{ $order->total }}</td>
-                                    <td>{{ collect(json_decode($order->items, true))->sum('tokens') }}</td>
-                                    <td>{{ ucfirst($order->status) }}</td>
-                                    <td>
-                                        @if ($order->status === 'pending')
-                                            <form action="{{ route('orders.update', $order->id) }}" method="POST"
-                                                class="d-inline">
-                                                @csrf
-                                                @method('PUT')
-                                                <input type="hidden" name="status" value="active">
-                                                <button type="submit" class="btn btn-success">Approve Order</button>
-                                            </form>
-                                            <form action="{{ route('orders.update', $order->id) }}" method="POST"
-                                                class="d-inline">
-                                                @csrf
-                                                @method('PUT')
-                                                <input type="hidden" name="status" value="rejected">
-                                                <button type="submit" class="btn btn-danger ms-2">Reject Order</button>
-                                            </form>
-                                            <a href="{{ route('orders.show', $order->id) }}"
-                                                class="btn btn-primary ms-2">View</a>
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            <div class="mt-4">
                 {{ $orders->links() }}
             </div>
         </div>
     </div>
+
+    @push('scripts')
+        <script>
+            function updateStatus(select) {
+                const orderId = select.dataset.orderId;
+                const status = select.value;
+
+                fetch(`/admin/orders/${orderId}/status`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            status
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            toastr.success('Order status updated successfully');
+                        }
+                    })
+                    .catch(error => {
+                        toastr.error('Failed to update order status');
+                    });
+            }
+
+            function deleteOrder(orderId) {
+                if (confirm('Are you sure you want to delete this order?')) {
+                    fetch(`/admin/orders/${orderId}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                toastr.success('Order deleted successfully');
+                                location.reload();
+                            }
+                        })
+                        .catch(error => {
+                            toastr.error('Failed to delete order');
+                        });
+                }
+            }
+        </script>
+    @endpush
 </x-d-layout>

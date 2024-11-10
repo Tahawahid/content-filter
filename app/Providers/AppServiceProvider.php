@@ -28,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('frontend.components.nav-link', 'nav-link');
         Blade::component('frontend.components.foot', 'foot');
         Blade::component('frontend.components.footer', 'footer');
+        Blade::component('frontend.components.cartbar', 'cartbar');
 
 
         //Admin Dashboard Componenets

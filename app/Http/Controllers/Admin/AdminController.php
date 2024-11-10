@@ -15,7 +15,24 @@ class AdminController extends Controller
         $todays_orders = Order::whereDate('created_at', now())->count();
         $todays_revenue = Order::where('status', 'approved')->whereDate('created_at', now())->sum('total');
         $total_revenue = Order::where('status', 'approved')->sum('total');
-        $orders = Order::latest()->take(5)->get();
-        return view('dashboard.admin.home', compact('orders', 'todays_orders', 'todays_revenue', 'total_revenue', 'total_order', 'orders'));
+
+        $orders = Order::with(['userDetail', 'package'])
+            ->latest()
+            ->take(5)
+            ->get()
+            ->map(function ($order) {
+                return [
+                    'id' => $order->id,
+                    'date' => $order->created_at->format('d M Y'),
+                    'order' => 'ORD-' . $order->id,
+                    'customer_name' => $order->userDetail->name ?? 'N/A',
+                    'phone' => $order->userDetail->phone_number,
+                    'package' => $order->package->name,
+                    'total' => $order->total,
+                    'status' => $order->status
+                ];
+            });
+
+        return view('dashboard.admin.home', compact('orders', 'todays_orders', 'todays_revenue', 'total_revenue', 'total_order'));
     }
 }

@@ -43,7 +43,6 @@
     <!-- Sale & Revenue End -->
 
     <!-- Recent Order Start -->
-    <!-- Recent Order Start -->
     <div class="container-fluid pt-4 px-4">
         <div class="bg-secondary text-center rounded p-4">
             <div class="d-flex align-items-center justify-content-between mb-4">
@@ -55,9 +54,10 @@
                     <thead>
                         <tr class="text-white">
                             <th scope="col">Date</th>
-                            <th scope="col">Invoice</th>
+                            <th scope="col">Order ID</th>
                             <th scope="col">Customer</th>
                             <th scope="col">Phone</th>
+                            <th scope="col">Package</th>
                             <th scope="col">Amount</th>
                             <th scope="col">Status</th>
                             <th scope="col">Action</th>
@@ -66,20 +66,28 @@
                     <tbody>
                         @foreach ($orders as $order)
                             <tr>
-                                <td>{{ $order->created_at->format('d M Y') }}</td>
-                                <td>INV-{{ $order->id }}</td>
-                                <td>{{ $order->name }}</td>
-                                <td>{{ $order->phone }}</td>
-                                <td>${{ $order->total }}</td>
-                                <td>{{ $order->status }}</td>
+                                <td>{{ $order['date'] }}</td>
+                                <td>{{ $order['order'] }}</td>
+                                <td>{{ $order['customer_name'] }}</td>
+                                <td>{{ $order['phone'] }}</td>
+                                <td>{{ $order['package'] }}</td>
+                                <td>${{ $order['total'] }}</td>
                                 <td>
-                                    <a class="btn btn-sm btn-primary" href="">Detail</a>
+                                    <span
+                                        class="badge bg-{{ $order['status'] === 'approved' ? 'success' : ($order['status'] === 'pending' ? 'warning' : 'danger') }}">
+                                        {{ ucfirst($order['status']) }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <a class="btn btn-sm btn-primary"
+                                        href="{{ route('orders.show', $order['id']) }}">Detail</a>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
+
         </div>
     </div>
     <!-- Recent Sales End -->

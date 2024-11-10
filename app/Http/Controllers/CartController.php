@@ -63,7 +63,36 @@ class CartController extends Controller
         return redirect()->back();
     }
 
+    // public function store(Request $request)
+    // {
+    //     $cart = session()->get('cart', []);
+    //     $id = $request->id;
 
+    //     if (isset($cart[$id])) {
+    //         $cart[$id]['quantity']++;
+    //     } else {
+    //         $cart[$id] = [
+    //             "name" => $request->name,
+    //             "price" => $request->price,
+    //             "tokens" => $request->tokens,
+    //             "quantity" => 1
+    //         ];
+    //     }
+
+    //     session()->put('cart', $cart);
+
+    //     $total = array_reduce($cart, function ($sum, $item) {
+    //         return $sum + $item['price'] * $item['quantity'];
+    //     }, 0);
+
+    //     session()->put('cart_total', $total);
+
+    //     return response()->json([
+    //         'success' => true,
+    //         'cart' => $cart,
+    //         'total' => $total
+    //     ]);
+    // }
 
     /**
      * Display the specified resource.

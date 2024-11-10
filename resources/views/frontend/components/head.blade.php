@@ -24,8 +24,10 @@
 
     <meta name="msapplication-TileColor" content="#F8F8F8">
     <meta name="theme-color" content="#3686FC">
+    {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
 
-    <title> Sign In - AiLand - AI Tools/App Landing HTML5 Responsive Template</title>
+
+    <title> </title>
 
     <!--=======================================
       All Css Style link
@@ -53,6 +55,9 @@
 
     <!-- Icons -->
     <link rel="stylesheet" href="{{ asset('assets/css/icons.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Custom styles for this template -->
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">

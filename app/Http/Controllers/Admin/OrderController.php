@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\UserToken;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
@@ -15,7 +16,11 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::with('user')->latest()->paginate(10);
+
+        $orders = Order::with(['userDetail', 'package'])
+            ->latest()
+            ->paginate(10);
+
         return view('dashboard.admin.order.index', compact('orders'));
     }
 
@@ -57,10 +62,10 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-
-        $order = Order::with('user')->findOrFail($order->id);
+        $order->load(['user', 'package', 'userDetail']); // Load related models only if needed
         return view('dashboard.admin.order.show', compact('order'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -79,14 +84,12 @@ class OrderController extends Controller
         $order->update(['status' => $status]);
 
         if ($status === 'active') {
-            $items = json_decode($order->items, true) ?? [];
-            $firstItem = !empty($items) ? current($items) : ['tokens' => 0];
 
             UserToken::create([
                 'user_id' => $order->user_id,
                 'order_id' => $order->id,
-                'token' => $firstItem['tokens'],
-                'remaining_tokens' => $firstItem['tokens']
+                'token' => $order->tokens,
+                'remaining_tokens' => $order->tokens,
             ]);
         }
 

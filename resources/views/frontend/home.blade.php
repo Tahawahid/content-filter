@@ -539,7 +539,8 @@
                                                                         @endforeach
                                                                     </ul>
                                                                 </div>
-                                                                <form action="{{ route('cart.store') }}"
+                                                                <form class="add-to-cart-form"
+                                                                    action="{{ route('cart.store') }}"
                                                                     method="POST">
                                                                     @csrf
                                                                     <input type="hidden" name="id"
@@ -846,37 +847,8 @@
         </section>
         <!-- Customer Testimonial Area End -->
 
-        {{-- Add to Cart Area Start --}}
         <!-- Cart Sidebar -->
-        <div class="cart-sidebar" id="cartSidebar">
-            <div class="cart-header">
-                <h4>Shopping Cart</h4>
-                <button class="close-cart" onclick="toggleCart()">×</button>
-            </div>
-            <div class="cart-items">
-                @if (session('cart') && count(session('cart')) > 0)
-                    @foreach (session('cart') as $id => $details)
-                        <div class="cart-item">
-                            <div class="item-details">
-                                <h5>{{ $details['name'] }}</h5>
-                                <p>${{ $details['price'] }}</p>
-                            </div>
-                            {{-- <form action="{{ route('cart.remove', $id) }}" method="POST" class="remove-item">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="remove-btn">×</button>
-                            </form> --}}
-                        </div>
-                    @endforeach
-                    <div class="cart-total">
-                        <h5>Total: ${{ $total ?? 0 }}</h5>
-                        <a href="{{ route('cart.index') }}" class="theme-btn w-100">View Cart</a>
-                    </div>
-                @else
-                    <p>Your cart is empty</p>
-                @endif
-            </div>
-        </div>
+        {{-- <x-cartbar></x-cartbar> --}}
 
         {{-- Add to Cart Area End --}}
 

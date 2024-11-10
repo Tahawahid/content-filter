@@ -52,8 +52,6 @@
                         </li>
                     </ul>
                     @guest
-
-
                         <ul class="navbar-nav mb-2 mb-lg-0 col-md-3 navbar-nav-right">
                             <li class="nav-item">
                                 <x-nav-link href="account/sign-up" :active="request()->is('account/sign-up')">Sign-up</x-nav-link>
@@ -82,6 +80,15 @@
                             </div>
                         </div>
                     @endauth
+                    <div class="navbar-nav align-items-center ms-2">
+                        <div class="nav-item">
+                            <a href="{{ route('cart.index') }}" class="nav-link cart">
+                                <i class="fa-solid fa-cart-shopping text-5xl"></i>
+                                {{-- <span class="cart-count">{{ session('cart') ? count(session('cart')) : 0 }}</span> --}}
+                                {{-- <span class="cart-total">${{ session('cart_total') ?? 0 }}</span> --}}
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -178,60 +178,79 @@ function toggleCart() {
   document.getElementById('cartSidebar').classList.toggle('active');
 }
 
-// Update the add to cart form submission
-document.querySelectorAll('.add-to-cart-form').forEach(form => {
-  form.addEventListener('submit', function(e) {
-      e.preventDefault();
+// Update the add-to-cart form submission
+// document.querySelectorAll('.add-to-cart-form').forEach(form => {
+//   form.addEventListener('submit', function(e) {
+//       e.preventDefault();
       
-      fetch(this.action, {
-          method: 'POST',
-          headers: {
-              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-          },
-          body: JSON.stringify({
-              id: this.querySelector('input[name="id"]').value,
-              name: this.querySelector('input[name="name"]').value,
-              price: this.querySelector('input[name="price"]').value,
-              features: this.querySelector('input[name="features"]').value,
-          })
-      })
-      .then(response => response.json())
-      .then(data => {
-          if (data.success) {
-              toggleCart();
-              updateCartItems(data.cart, data.total);
-          } else {
-              alert('Failed to add item to cart');
-          }
-      });
-  });
-});
+//       const itemId = this.querySelector('input[name="id"]').value;
+//       const cart = document.querySelector('.cart-items').querySelectorAll('.cart-item');
+      
+//       // Check if item already exists
+//       if (Array.from(cart).some(item => item.dataset.id === itemId)) {
+//           alert('This item is already in your cart');
+//           return;
+//       }
+      
+//       const formData = new FormData(this);
+//       fetch(this.action, {
+//           method: 'POST',
+//           headers: {
+//               'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+//               'Accept': 'application/json'
+//           },
+//           body: formData
+//       })
+//       .then(response => response.json())
+//       .then(data => {
+//           if (data.success) {
+//               toggleCart();
+//               updateCartItems(data.cart, data.total);
+//           }
+//       });
+//   });
+// });
 
-function updateCartItems(items, total) {
-  const cartItemsContainer = document.querySelector('.cart-items');
-  cartItemsContainer.innerHTML = '';  // Clear existing items
+// function updateCartItems(items, total) {
+//   const cartItemsContainer = document.querySelector('.cart-items');
+//   cartItemsContainer.innerHTML = '';
 
-  if (Object.keys(items).length > 0) {
-      for (const id in items) {
-          const item = items[id];
-          const itemHTML = `
-              <div class="cart-item">
-                  <div class="item-details">
-                      <h5>${item.name}</h5>
-                      <p>$${item.price}</p>
-                  </div>
-              </div>`;
-          cartItemsContainer.insertAdjacentHTML('beforeend', itemHTML);
-      }
+//   if (Object.keys(items).length > 0) {
+//       for (const id in items) {
+//           const item = items[id];
+//           const itemHTML = `
+//               <div class="cart-item" data-id="${id}">
+//                   <div class="item-details">
+//                       <h5>${item.name}</h5>
+//                       <p>$${item.price}</p>
+//                       <button class="remove-btn" onclick="removeItem('${id}')">Remove</button>
+//                   </div>
+//               </div>`;
+//           cartItemsContainer.insertAdjacentHTML('beforeend', itemHTML);
+//       }
 
-      const totalHTML = `<div class="cart-total">
-                              <h5>Total: $${total}</h5>
-                              <a href="/cart" class="theme-btn w-100">View Cart</a>
-                         </div>`;
-      cartItemsContainer.insertAdjacentHTML('beforeend', totalHTML);
-  } else {
-      cartItemsContainer.innerHTML = '<p>Your cart is empty</p>';
-  }
-}
+//       const totalHTML = `<div class="cart-total">
+//                           <h5>Total: $${total}</h5>
+//                           <a href="/cart" class="theme-btn w-100">View Cart</a>
+//                       </div>`;
+//       cartItemsContainer.insertAdjacentHTML('beforeend', totalHTML);
+//   } else {
+//       cartItemsContainer.innerHTML = '<p>Your cart is empty</p>';
+//   }
+// }
+
+// function removeItem(id) {
+//   fetch(`/cart/${id}`, {
+//       method: 'DELETE',
+//       headers: {
+//           'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+//           'Accept': 'application/json'
+//       }
+//   })
+//   .then(response => response.json())
+//   .then(data => {
+//       if (data.success) {
+//           updateCartItems(data.cart, data.total);
+//       }
+//   });
+// }

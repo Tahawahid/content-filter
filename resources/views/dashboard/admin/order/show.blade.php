@@ -3,7 +3,7 @@
         <div class="bg-secondary rounded p-4">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h3 class="mb-0">Order Details</h3>
-                <a href=" {{ route('orders.index') }} " class="btn btn-primary">Back to Orders</a>
+                <a href="{{ route('orders.index') }}" class="btn btn-primary">Back to Orders</a>
             </div>
 
             <div class="row">
@@ -13,9 +13,9 @@
                             <h5>Customer Information</h5>
                         </div>
                         <div class="card-body">
-                            <p><strong>Name:</strong> {{ $order->name }}</p>
-                            <p><strong>Email:</strong> {{ $order->email }}</p>
-                            <p><strong>Phone:</strong> {{ $order->phone }}</p>
+                            <p><strong>Name:</strong> {{ $order->userDetail->name ?? 'N/A' }}</p>
+                            <p><strong>Email:</strong> {{ $order->userDetail->email ?? 'N/A' }}</p>
+                            <p><strong>Phone:</strong> {{ $order->userDetail->phone_number ?? 'N/A' }}</p>
                         </div>
                     </div>
                 </div>
@@ -50,16 +50,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @php
-                                    $items = json_decode($order->items, true) ?? [];
-                                    $firstItem = !empty($items)
-                                        ? current($items)
-                                        : ['name' => 'N/A', 'tokens' => 0, 'price' => 0];
-                                @endphp
                                 <tr>
-                                    <td>{{ $firstItem['name'] }}</td>
-                                    <td>{{ $firstItem['tokens'] }}</td>
-                                    <td>${{ $firstItem['price'] }}</td>
+                                    <td>{{ $order->package->name ?? 'N/A' }}</td>
+                                    <td>{{ $order->package->token ?? 0 }}</td>
+                                    <td>${{ $order->package->price ?? 0 }}</td>
                                 </tr>
                             </tbody>
                         </table>

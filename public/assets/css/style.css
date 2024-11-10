@@ -5828,6 +5828,21 @@ hr {
     border-bottom: 1px solid #eee;
 }
 
+span.cart-count {
+    position: absolute;
+    right: -17px;
+    top: -5px;
+    font-size: 15px;
+    background: #06FF79;
+    border-radius: 125px;
+    padding: 1px 8px;
+}
+
+
+.cart{
+    font-size: 24px !important;
+}
+
 .remove-btn {
     background: none;
     border: none;

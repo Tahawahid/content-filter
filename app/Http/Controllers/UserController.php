@@ -11,40 +11,51 @@ class UserController extends Controller
 {
     public function home()
     {
-        // return view('dashboard.client.home');
-        $subscriptions = [];
         $user = Auth::user();
-        // dd($user);
+
+        // Retrieve the pending request
         $pending_request = Order::where('user_id', $user->id)
             ->where('status', 'pending')
             ->first();
 
+        // Retrieve active subscriptions for the user with package details
         $active_subscriptions = Order::where('user_id', $user->id)
             ->where('status', 'active')
+            ->with('package') // Load related package data
             ->get();
 
-        $user_tokens = UserToken::where('user_id', $user->id);
-        // dd($active_subscriptions);
+        // Count total subscriptions for the user
+        $total_subscriptions = Order::where('user_id', $user->id)
+            ->where('status', 'active')
+            ->count();
 
+        // Count active and pending subscriptions
+        $total_active_subscriptions = $this->getTotalActiveSubscriptions($user->id);
+        $total_pending_subscriptions = $this->getTotalPendingSubscriptions($user->id);
 
-        // foreach ($active_subscriptions as $subscription) {
-        //     $items = json_decode($subscription->items, true);
-        //     // dd($items);
-        //     // Check if the decoded items array has the required keys
-        //     if (isset($items[0]) && isset($items[0]['name'])) {
-        //         $subscriptions[] = [
-        //             'package_name' => $items[0]['name'],
-        //             'tokens_left' => $subscription->tokens_remaining,
-        //             'purchase_date' => $subscription->created_at
-        //         ];
-        //     }
-        // }
-
+        // Retrieve tokens for the user
+        $user_tokens = UserToken::where('user_id', $user->id)->first();
 
         return view('dashboard.client.home', compact(
             'pending_request',
             'active_subscriptions',
-            'user_tokens'
+            'user_tokens',
+            'total_subscriptions',
+            'total_active_subscriptions',
+            'total_pending_subscriptions'
         ));
+    }
+    public function getTotalActiveSubscriptions($userId)
+    {
+        return Order::where('user_id', $userId)
+            ->where('status', 'active')
+            ->count();
+    }
+
+    public function getTotalPendingSubscriptions($userId)
+    {
+        return Order::where('user_id', $userId)
+            ->where('status', 'pending')
+            ->count();
     }
 }
