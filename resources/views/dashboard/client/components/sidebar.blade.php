@@ -2,7 +2,7 @@
 <div class="sidebar pe-4 pb-3">
     <nav class="navbar bg-secondary navbar-dark justify-content-center">
         <div class="d-flex flex-column justify-content-center align-items-center mb-3 mt-1">
-            <a href="index.html" style="width: 100px">
+            <a href="{{ route('frontend.home') }}" style="width: 100px">
                 <img src="{{ asset('dashboard/img/logo.png') }}" alt="" style="width: 100px" />
             </a>
             <div class="d-flex align-items-center mb-3 mt-4">

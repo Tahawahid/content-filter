@@ -42,39 +42,52 @@
         </div>
     </div>
     <div class="container-fluid pt-4 px-4">
-        <div class="bg-secondary rounded p-4">
+        <div class="bg-secondary rounded p-5 shadow-lg">
             @if ($pending_request)
+                <!-- Pending Request Notification -->
                 <div class="text-center">
-                    <i class="fa fa-clock fa-4x text-warning mb-3"></i>
-                    <h4>Your Request is Under Review</h4>
-                    <p>Please wait for the confirmation email and call. We'll process your request shortly.</p>
+                    <i class="fa fa-clock fa-4x text-warning mb-4"></i>
+                    <h3 class="text-warning">Request Under Review</h3>
+                    <p class="text-white-50">We are processing your request. Please keep an eye on your email and phone for confirmation.</p>
                 </div>
+    
             @elseif($active_subscriptions->isNotEmpty())
+                <!-- Active Subscriptions List -->
                 <div class="text-center">
-                    <i class="fa fa-check-circle fa-4x text-success mb-3"></i>
-                    <h4>Active Subscriptions</h4>
-
-                    @foreach ($active_subscriptions as $subscription)
-                        <div class="mb-3">
-                            <p>Package Name: {{ $subscription->package->name }}</p>
-                            <p>Price: ${{ $subscription->price }}</p>
-                            <p>Tokens: {{ $subscription->tokens }}</p>
-                            <p>Remaining Tokens: {{ $user_tokens->remaining_tokens ?? 'N/A' }}</p>
-                            <p>Purchase Date: {{ $subscription->created_at->format('Y-m-d') }}</p>
-                        </div>
-                    @endforeach
+                    <i class="fa fa-check-circle fa-4x text-success mb-4"></i>
+                    <h3 class="text-success">Your Active Subscriptions</h3>
+                    
+                    <!-- Display each subscription in a card format for better readability -->
+                    <div class="row mt-4">
+                        @foreach ($active_subscriptions as $subscription)
+                            <div class="col-md-6 mb-4">
+                                <div class="card bg-dark text-white p-3 shadow-sm">
+                                    <h5 class="text-primary">Package: {{ $subscription->package->name }}</h5>
+                                    <p>Price: <strong>${{ number_format($subscription->price, 2) }}</strong></p>
+                                    <p>Tokens: <strong>{{ $subscription->tokens }}</strong></p>
+                                    <p>Remaining Tokens: <strong>{{ $user_tokens->remaining_tokens ?? 'N/A' }}</strong></p>
+                                    <p>Purchase Date: <strong>{{ $subscription->created_at->format('Y-m-d') }}</strong></p>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
+    
             @else
+                <!-- No Subscription Message -->
                 <div class="text-center">
-                    <i class="fa fa-info-circle fa-4x text-primary mb-3"></i>
-                    <h4>No Active Subscription</h4>
-                    <p>To access our services, please choose one of our packages or contact us for assistance.</p>
+                    <i class="fa fa-info-circle fa-4x text-primary mb-4"></i>
+                    <h3 class="text-primary">No Active Subscription</h3>
+                    <p class="text-white-50">Explore our packages to access exclusive features. Contact us if you need assistance!</p>
+                    
+                    <!-- Call-to-action buttons -->
                     <div class="mt-4">
-                        <a href="{{ route('frontend.home') }}#pricing" class="btn btn-primary me-2">View Packages</a>
-                        <a href="{{ route('frontend.contact') }}" class="btn btn-outline-primary">Contact Us</a>
+                        <a href="{{ route('frontend.home') }}#pricing" class="btn btn-primary btn-lg me-2">View Packages</a>
+                        <a href="{{ route('frontend.contact') }}" class="btn btn-outline-primary btn-lg">Contact Us</a>
                     </div>
                 </div>
             @endif
         </div>
     </div>
+    
 </x-c-layout>

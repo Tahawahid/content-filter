@@ -38,16 +38,16 @@
             </a>
             <a href="{{ route('orders.today') }}"
                 class="nav-item nav-link {{ request()->routeIs('orders.today') ? 'active' : '' }}">
-                <i class="fas fa-box me-2"></i>Current Orders
+                <i class="fas fa-box me-2"></i>Todays Orders
             </a>
             <a href="{{ route('filter.index') }}"
                 class="nav-item nav-link {{ request()->is('filter.index') ? 'active' : '' }}">
-                <i class="fas fa-box me-2"></i>All Content Filter Request
+                <i class="fas fa-box me-2"></i>Content Filter Request
             </a>
-            <a href="AllContentFilterRequest.html"
+            {{-- <a href="AllContentFilterRequest.html"
                 class="nav-item nav-link {{ request()->is('AllContentFilterRequest.html') ? 'active' : '' }}">
-                <i class="fas fa-box me-2"></i>Current Content Filter Request
-            </a>
+                <i class="fas fa-box me-2"></i> Content Filter Request
+            </a> --}}
             <a href="/account/admin/packages"
                 class="nav-item nav-link {{ request()->is('account/admin/packages') ? 'active' : '' }}">
                 <i class="fas fa-box me-2"></i>Packages

@@ -1,7 +1,7 @@
 <x-layout>
     <x-preloader></x-preloader>
     <x-nav></x-nav>
-    <div class="hero-area-top-part container my-5">
+    <div class="hero-area-top-part bg-transparent container">
         <div class="row">
             <div class="col-md-8">
                 <div class="card bg-secondary">
@@ -29,7 +29,9 @@
                                                 <form action="{{ route('cart.destroy', $id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                                                    <button type="submit" class="btn  btn-sm"><i
+                                                            class="fa fa-trash text-white p-3 fa-lg"
+                                                            aria-hidden="true"></i></button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -54,9 +56,25 @@
                         <h4 class="text-white">Cart Summary</h4>
                     </div>
                     <div class="cart-summary p-3">
-                        <h4 class="text-white">Cart Summary</h4>
-                        <p class="text-white">Total Price: ${{ number_format($total, 2) }}</p>
-                        <p class="text-white">Total Tokens: {{ $totalTokens }}</p>
+
+                        <table class="table table-striped text-white">
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-white">Total Price</td>
+                                    <td class="text-white">${{ number_format($total, 2) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Total Tokens</td>
+                                    <td>{{ $totalTokens }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                         @if (session('cart') && count(session('cart')) > 0)
                             <a href="{{ route('checkout.index') }}" class="theme-btn w-100">Proceed to Checkout</a>
                         @endif

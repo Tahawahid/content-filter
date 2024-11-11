@@ -76,4 +76,6 @@ class ContentFilter extends Controller
         ModelsContentFilter::findOrFail($id)->delete();
         return redirect()->route('filters.index')->with('success', 'Request deleted successfully');
     }
+
+        
 }
