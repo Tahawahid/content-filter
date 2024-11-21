@@ -12,7 +12,7 @@
                         <h3>Checkout Information</h3>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('checkout.store') }}" method="POST">
+                        <form action="{{ route('checkout.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
                                 <label for="name" class="form-label">Name</label>
@@ -65,6 +65,17 @@
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
+                            <div class="mb-3">
+                                <label for="payment_receipt" class="form-label">Payment Receipt URL</label>
+                                <input type="url" class="form-control" id="payment_receipt" name="payment_receipt">
+                                <div class="form-text text-info">
+                                    Please upload your payment receipt to Google Drive or any cloud storage and share
+                                    the view-only link. This helps us verify your payment quickly.
+                                </div>
+                                @error('payment_receipt')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                             <input type="hidden" name="total" value="{{ $total }}">
                             <button type="submit" class="theme-btn">Place Order</button>
                         </form>
@@ -87,6 +98,21 @@
                         <div class="d-flex justify-content-between">
                             <strong>Total: </strong>
                             <strong>${{ $total }}</strong>
+                        </div>
+
+                        <div class="mt-4">
+                            <h4>Payment Details</h4>
+                            <div class="payment-info">
+                                <p class="text-secondary"><strong>Bank Name:</strong> Meezan Bank</p>
+                                <p class="text-secondary"><strong>Account Holder:</strong> MUHAMMAD OWAIS QURNI</p>
+                                <p class="text-secondary"><strong>Account Number for Locals:</strong> 99780108468821</p>
+                                <p class="text-secondary"><strong>Account Number for International:</strong>
+                                    PK57MEZN0099780108468821</p>
+                                {{-- <p class="text-secondary"><strong>SWIFT/BIC:</strong> XXXXXXXX</p> --}}
+                                {{-- <div class="alert alert-info">
+                                    Please include your Order ID in payment reference for faster verification.
+                                </div> --}}
+                            </div>
                         </div>
                     </div>
                 </div>

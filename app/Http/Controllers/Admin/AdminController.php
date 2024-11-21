@@ -29,7 +29,8 @@ class AdminController extends Controller
                     'phone' => $order->userDetail->phone_number,
                     'package' => $order->package->name,
                     'total' => $order->total,
-                    'status' => $order->status
+                    'status' => $order->status,
+                    'payment_receipt' => $order->payment_receipt,
                 ];
             });
 

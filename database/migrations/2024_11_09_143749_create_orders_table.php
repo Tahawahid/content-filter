@@ -20,6 +20,7 @@ return new class extends Migration
             $table->enum('status', ['pending', 'approved', 'rejected', 'on-hold', 'active', 'cancelled']);
             $table->decimal('total', 10, 2);
             $table->integer('tokens');
+            $table->text('payment_receipt');
             $table->timestamps();
         });
     }

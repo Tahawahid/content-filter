@@ -16,7 +16,8 @@ class Order extends Model
         'price',
         'status',
         'total',
-        'tokens'
+        'tokens',
+        'payment_receipt'
     ];
 
     public function user()

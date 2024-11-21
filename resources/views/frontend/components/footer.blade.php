@@ -53,10 +53,10 @@
                     <h5 class="footer-widget-title font-bold">Support</h5>
                     <div class="footer-links d-flex">
                         <ul>
-                            <li><a href="register.html">Register</a></li>
-                            <li><a href="sign-in.html">Sign In</a></li>
-                            <li><a href="contact-us.html">Contact</a></li>
-                            <li><a href="forgot-password.html">Forget Password</a></li>
+                            <li><a href="{{ route('frontend.signUp') }}">Register</a></li>
+                            <li><a href="{{ route('frontend.signIn') }}">Sign In</a></li>
+                            <li><a href="{{ route('frontend.contact') }}">Contact</a></li>
+                            {{-- <li><a href="forgot-password.html">Forget Password</a></li> --}}
                         </ul>
                     </div>
                 </div>
@@ -64,10 +64,11 @@
 
             <div class="col-12 col-sm-12 col-md-12 col-lg-4">
                 <div class="footer-widget footer-about">
-                    <a href="index.html"><img src="{{ asset('assets/img/home2-logo.png') }}" alt="Logo"></a>
-                    <address class="big-para">
+                    <a href="{{ route('frontend.home') }}"><img src="{{ asset('assets/img/LOGO-GRADIANT.png') }}"
+                            alt="Logo" width="250px"></a>
+                    {{-- <address class="big-para">
                         <p>House #175, 20 Notordem Road, Killa Side, United State of America</p>
-                    </address>
+                    </address> --}}
                     <div class="footer-social mt-30">
                         <ul class="d-flex align-items-center">
                             <li><a href="javascript:void(0)"><span class="iconify"
@@ -90,7 +91,7 @@
             <div class="row">
                 <div class="col-12 col-md-12">
                     <div class="copyright-text text-center">
-                        <p>© 2023-24 AiLand. All Rights Reserved.</p>
+                        <p>© 2023-24 Content Filter AI. All Rights Reserved.</p>
                     </div>
                 </div>
             </div>

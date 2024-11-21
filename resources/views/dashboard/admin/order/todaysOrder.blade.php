@@ -15,6 +15,7 @@
                             <th scope="col">Package</th>
                             <th scope="col">Tokens</th>
                             <th scope="col">Amount</th>
+                            <th scope="col">Payment Receipt</th>
                             <th scope="col">Status</th>
                             <th scope="col">Actions</th>
                         </tr>
@@ -29,6 +30,16 @@
                                 <td>{{ $order->package->name }}</td>
                                 <td>{{ $order->tokens }}</td>
                                 <td>${{ $order->total }}</td>
+                                <td>
+                                    @if ($order['payment_receipt'])
+                                        <a href="{{ asset($order['payment_receipt']) }}" target="_blank"
+                                            class="btn btn-sm btn-info">
+                                            View Receipt
+                                        </a>
+                                    @else
+                                        No Receipt
+                                    @endif
+                                </td>
                                 <td>
                                     <select class="form-select bg-dark text-white status-select"
                                         data-order-id="{{ $order->id }}" onchange="updateStatus(this)">

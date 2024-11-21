@@ -59,6 +59,7 @@
                             <th scope="col">Phone</th>
                             <th scope="col">Package</th>
                             <th scope="col">Amount</th>
+                            <th scope="col">Payment Receipt</th>
                             <th scope="col">Status</th>
                             <th scope="col">Action</th>
                         </tr>
@@ -72,6 +73,16 @@
                                 <td>{{ $order['phone'] }}</td>
                                 <td>{{ $order['package'] }}</td>
                                 <td>${{ $order['total'] }}</td>
+                                <td>
+                                    @if ($order['payment_receipt'])
+                                        <a href="{{ asset($order['payment_receipt']) }}" target="_blank"
+                                            class="btn btn-sm btn-info">
+                                            View Receipt
+                                        </a>
+                                    @else
+                                        No Receipt
+                                    @endif
+                                </td>
                                 <td>
                                     <span
                                         class="badge bg-{{ $order['status'] === 'approved' ? 'success' : ($order['status'] === 'pending' ? 'warning' : 'danger') }}">
@@ -87,7 +98,7 @@
                     </tbody>
                 </table>
             </div>
-            
+
         </div>
     </div>
     <!-- Recent Sales End -->
