@@ -7,8 +7,9 @@
             </a>
             <div class="d-flex align-items-center mb-3 mt-4">
                 <div class="position-relative">
-                    <img class="rounded-circle" src="{{ asset('dashboard/img/user.jpg') }}" alt=""
-                        style="width: 40px; height: 40px" />
+                    <img class="rounded-circle"
+                        src="{{ auth('admin')->user()->profile_picture ? asset('storage/' . auth('admin')->user()->profile_picture) : asset('dashboard/img/user.jpg') }}"
+                        alt="" style="width: 40px; height: 40px; object-fit: cover;" />
                     <div
                         class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1">
                     </div>
@@ -22,6 +23,7 @@
                     </span>
                 </div>
             </div>
+
         </div>
         <div class="navbar-nav w-100">
             <a href="{{ route('dashboard.admin.home') }}"
@@ -51,6 +53,10 @@
             <a href="/account/admin/packages"
                 class="nav-item nav-link {{ request()->is('account/admin/packages') ? 'active' : '' }}">
                 <i class="fas fa-box me-2"></i>Packages
+            </a>
+            <a href="{{ route('admin.create') }}"
+                class="nav-item nav-link {{ request()->routeIs('admin.create') ? 'active' : '' }}">
+                <i class="fas fa-user-plus me-2"></i>Add Admin
             </a>
         </div>
 

@@ -52,6 +52,15 @@
                                         <option value="rejected" {{ $order->status === 'rejected' ? 'selected' : '' }}>
                                             Rejected
                                         </option>
+                                        <option value="rejected" {{ $order->status === 'rejected' ? 'selected' : '' }}>
+                                            Active
+                                        </option>
+                                        <option value="rejected" {{ $order->status === 'rejected' ? 'selected' : '' }}>
+                                            On Hold
+                                        </option>
+                                        <option value="rejected" {{ $order->status === 'rejected' ? 'selected' : '' }}>
+                                            Canclled
+                                        </option>
                                     </select>
                                 </td>
                                 <td>

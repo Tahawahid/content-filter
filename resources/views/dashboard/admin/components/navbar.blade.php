@@ -12,18 +12,19 @@
     <div class="navbar-nav align-items-center ms-auto">
         <div class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                <img class="rounded-circle me-lg-2" src="{{ asset('dashboard/img/user.jpg') }}" alt=""
-                    style="width: 40px; height: 40px" />
+                <img class="rounded-circle me-lg-2"
+                    src="{{ auth('admin')->user()->profile_picture ? asset('storage/' . auth('admin')->user()->profile_picture) : asset('dashboard/img/user.jpg') }}"
+                    alt="" style="width: 40px; height: 40px; object-fit: cover;" />
                 <span class="d-none d-lg-inline-flex">
                     {{ Auth::guard('admin')->user()->name }}
                 </span>
             </a>
             <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                <a href="#" class="dropdown-item">My Profile</a>
-                <a href="#" class="dropdown-item">Settings</a>
+                <a href="{{ route('admin.profile.edit') }}" class="dropdown-item">My Profile</a>
                 <a href="{{ route('dashboard.admin.logout') }}" class="dropdown-item">Log Out</a>
             </div>
         </div>
     </div>
+
 </nav>
 <!-- Navbar End -->

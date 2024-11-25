@@ -37,6 +37,8 @@ Route::prefix('account')->group(function () {
         Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
         Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
         Route::resource('content-filters', ContentFilter::class);
+        Route::get('/profile', [UserController::class, 'profile'])->name('profile');
+        Route::put('/profile/update', [UserController::class, 'updateProfile'])->name('profile.update');
     });
 
     Route::prefix('admin')->group(function () {
@@ -48,6 +50,12 @@ Route::prefix('account')->group(function () {
 
         Route::group(['middleware' => 'admin.auth'], function () {
             Route::get('/dashboard', [AdminController::class, 'home'])->name('dashboard.admin.home');
+            Route::get('/profile', [AdminController::class, 'editProfile'])->name('admin.profile.edit');
+            Route::put('/profile', [AdminController::class, 'updateProfile'])->name('admin.profile.update');
+            // Add in admin middleware group
+            Route::get('admins/create', [AdminController::class, 'createAdmin'])->name('admin.create');
+            Route::post('/admins', [AdminController::class, 'storeAdmin'])->name('admin.store');
+
             Route::resource('/packages', PackagesController::class);
             Route::get('/logout', [AdminAuthController::class, 'logout'])->name('dashboard.admin.logout');
             // Route::patch('/orders/{order}/approve', [OrderController::class, 'approve'])->name('orders.approve');

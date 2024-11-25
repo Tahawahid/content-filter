@@ -34,4 +34,8 @@ class Order extends Model
     {
         return $this->belongsTo(Package::class);
     }
+    public function userToken()
+    {
+        return $this->hasOne(UserToken::class);
+    }
 }

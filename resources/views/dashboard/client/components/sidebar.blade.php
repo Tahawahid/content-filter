@@ -7,8 +7,10 @@
             </a>
             <div class="d-flex align-items-center mb-3 mt-4">
                 <div class="position-relative">
-                    <img class="rounded-circle" src="{{ asset('dashboard/img/user.jpg') }}" alt=""
-                        style="width: 40px; height: 40px" />
+                    <img class="rounded-circle"
+                        src="{{ Auth::user()->profile_picture ? asset('storage/' . Auth::user()->profile_picture) : asset('assets/img/default_profile.jpg') }}"
+                        alt="" style="width: 40px; height: 40px; object-fit: cover" />
+
                     <div
                         class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1">
                     </div>

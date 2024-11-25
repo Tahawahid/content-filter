@@ -51,19 +51,33 @@
                                             Approved</option>
                                         <option value="rejected" {{ $order->status === 'rejected' ? 'selected' : '' }}>
                                             Rejected</option>
-                                        <option value="approved" {{ $order->status === 'on-hold' ? 'selected' : '' }}>
+                                        <option value="on-hold" {{ $order->status === 'on-hold' ? 'selected' : '' }}>
                                             On Hold</option>
-                                        <option value="approved" {{ $order->status === 'active' ? 'selected' : '' }}>
+                                        <option value="active" {{ $order->status === 'active' ? 'selected' : '' }}>
                                             Active</option>
-                                        <option value="pending" {{ $order->status === 'cancelled' ? 'selected' : '' }}>
+                                        <option value="cancelled"
+                                            {{ $order->status === 'cancelled' ? 'selected' : '' }}>
                                             Cancelled</option>
                                     </select>
                                 </td>
                                 <td>
                                     <a href="{{ route('orders.show', $order->id) }}"
                                         class="btn btn-sm btn-info">View</a>
-                                    <button onclick="deleteOrder({{ $order->id }})"
-                                        class="btn btn-sm btn-danger">Delete</button>
+                                    {{-- <button onclick="deleteOrder({{ $order->id }})"
+                                        class="btn btn-sm btn-danger">Delete</button> --}}
+                                <td>
+                                    <!-- Form to delete order -->
+                                    <form action="{{ route('orders.destroy', $order->id) }}" method="POST"
+                                        style="display: inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger"
+                                            onclick="return confirm('Are you sure you want to delete this order?')">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </td>
+
                                 </td>
                             </tr>
                         @endforeach
