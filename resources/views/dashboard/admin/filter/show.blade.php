@@ -42,6 +42,11 @@
                                         Rejected</option>
                                 </select>
                             </div>
+                            <div class="mb-3">
+                                <label class="form-label">Progress</label>
+                                <input type="number" name="progress" class="form-control" min="0" max="100"
+                                    value="{{ $request->progress }}" required>
+                            </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Reason</label>

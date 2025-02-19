@@ -2,7 +2,7 @@
 <div class="sidebar pe-4 pb-3">
     <nav class="navbar bg-secondary navbar-dark justify-content-center">
         <div class="d-flex flex-column justify-content-center align-items-center mb-3 mt-1">
-            <a href="index.html" style="width: 100px">
+            <a href="{{ route('frontend.home') }}" style="width: 100px">
                 <img src="{{ asset('assets/img/Logo.png') }}" alt="" style="width: 100px" />
             </a>
             <div class="d-flex align-items-center mb-3 mt-4">
@@ -54,10 +54,39 @@
                 class="nav-item nav-link {{ request()->is('account/admin/packages') ? 'active' : '' }}">
                 <i class="fas fa-box me-2"></i>Packages
             </a>
-            <a href="{{ route('admin.create') }}"
-                class="nav-item nav-link {{ request()->routeIs('admin.create') ? 'active' : '' }}">
-                <i class="fas fa-user-plus me-2"></i>Add Admin
-            </a>
+
+            @if (auth('admin')->id() === 1)
+                <a href="{{ route('admin.create') }}"
+                    class="nav-item nav-link {{ request()->routeIs('admin.create') ? 'active' : '' }}">
+                    <i class="fas fa-user-plus me-2"></i>Add Admin
+                </a>
+                <a href="{{ route('admin.list') }}"
+                    class="nav-item nav-link {{ request()->routeIs('admin.list') ? 'active' : '' }}">
+                    <i class="fas fa-users-cog me-2"></i>Manage Admins
+                </a>
+                {{-- <a href="{{ route('manage-site.index') }}"
+                    class="nav-item nav-link {{ request()->routeIs('manage-site.index') ? 'active' : '' }}">
+                    <i class="fas fa-cog me-2"></i>Manage Site
+                </a> --}}
+                <a href="{{ route('manage-site.index') }}"
+                    class="nav-item nav-link {{ request()->routeIs('manage-site.index') ? 'active' : '' }}">
+                    <i class="fas fa-cog me-2"></i>Manage Site
+                </a>
+                <a href="{{ route('manage-site.features') }}"
+                    class="nav-item nav-link {{ request()->routeIs('manage-site.features') ? 'active' : '' }}">
+                    <i class="fas fa-boxes me-2"></i>Manage Features
+                </a>
+
+                <a href="{{ route('manage-site.faqs') }}"
+                    class="nav-item nav-link {{ request()->routeIs('manage-site.faqs') ? 'active' : '' }}">
+                    <i class="fas fa-question-circle me-2"></i>Manage FAQs
+                </a>
+                <a href="{{ route('manage-site.testimonials') }}"
+                    class="nav-item nav-link {{ request()->routeIs('manage-site.testimonials') ? 'active' : '' }}">
+                    <i class="fas fa-quote-right me-2"></i>Manage Testimonials
+                </a>
+            @endif
+
         </div>
 
     </nav>

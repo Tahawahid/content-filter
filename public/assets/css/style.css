@@ -5880,3 +5880,11 @@ span.cart-count {
 /*-------------------------------------------
     23. Home 3 Page End
 -------------------------------------------*/
+
+
+@media only screen and (max-width: 1199.98px){
+    img.img-fluid {
+        width: 100%;
+        height: 65px !important;
+    }
+}

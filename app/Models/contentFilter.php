@@ -13,8 +13,10 @@ class contentFilter extends Model
         'youtube_link',
         'token_cost',
         'status',
-        'reason'
+        'reason',
+        'progress'
     ];
+
 
     public function user()
     {

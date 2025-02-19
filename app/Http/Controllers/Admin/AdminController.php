@@ -81,7 +81,36 @@ class AdminController extends Controller
 
     public function createAdmin()
     {
+        if (auth('admin')->id() !== 1) {
+            return back()->withErrors(['error' => 'Only primary admin can add new admins']);
+        }
         return view('dashboard.admin.AdminCreate');
+    }
+
+    public function listAdmins()
+    {
+        $admins = Admin::where('id', '!=', 1)->get();
+        return view('dashboard.admin.AdminList', compact('admins'));
+    }
+
+    public function destroyAdmin(Admin $admin)
+    {
+        if ($admin->id === 1) {
+            return back()->withErrors(['error' => 'Primary admin cannot be deleted']);
+        }
+
+        DB::beginTransaction();
+        try {
+            if ($admin->profile_picture) {
+                Storage::disk('public')->delete($admin->profile_picture);
+            }
+            $admin->delete();
+            DB::commit();
+            return back()->with('success', 'Admin deleted successfully');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return back()->withErrors(['error' => 'Failed to delete admin']);
+        }
     }
 
     public function storeAdmin(Request $request)

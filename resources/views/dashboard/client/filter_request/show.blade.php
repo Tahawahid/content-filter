@@ -27,11 +27,39 @@
                                 </td>
                                 <td>
                                     <span
-                                        class="badge bg-{{ $request->status === 'approved' ? 'success' : ($request->status === 'pending' ? 'warning' : 'danger') }}">
+                                        class="badge bg-{{ $request->status === 'approved'
+                                            ? 'success'
+                                            : ($request->status === 'pending'
+                                                ? 'warning'
+                                                : ($request->status === 'processing'
+                                                    ? 'info'
+                                                    : 'danger')) }}">
                                         {{ ucfirst($request->status) }}
                                     </span>
                                 </td>
                                 <td>{{ $request->token_cost }} tokens</td>
+                                <td>
+                                    <div class="progress bg-dark position-relative" style="height: 25px;">
+                                        <div class="progress-bar bg-{{ $request->status === 'approved'
+                                            ? 'success'
+                                            : ($request->status === 'pending'
+                                                ? 'warning'
+                                                : ($request->status === 'processing'
+                                                    ? 'info'
+                                                    : 'danger')) }}"
+                                            role="progressbar" style="width: {{ $request->progress }}%"
+                                            aria-valuenow="{{ $request->progress }}" aria-valuemin="0"
+                                            aria-valuemax="100">
+                                        </div>
+                                        <span
+                                            class="position-absolute d-flex align-items-center justify-content-center text-white w-100 h-100">
+                                            {{ $request->progress }}%
+                                        </span>
+                                    </div>
+                                </td>
+
+
+
                                 <td>{{ $request->reason ?? 'N/A' }}</td>
                             </tr>
                         @endforeach

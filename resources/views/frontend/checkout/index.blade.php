@@ -65,7 +65,7 @@
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="mb-3">
+                            {{-- <div class="mb-3">
                                 <label for="payment_receipt" class="form-label">Payment Receipt URL</label>
                                 <input type="url" class="form-control" id="payment_receipt" name="payment_receipt">
                                 <div class="form-text text-info">
@@ -75,7 +75,29 @@
                                 @error('payment_receipt')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
+                            </div> --}}
+                            <div class="mb-3">
+                                <label class="form-label">Payment Receipt</label>
+                                <div class="mb-2">
+                                    <input type="url" class="form-control" id="payment_receipt_url"
+                                        name="payment_receipt_url" placeholder="Enter payment receipt URL">
+                                    <small class="form-text text-info">Upload to cloud storage and share the
+                                        link</small>
+                                </div>
+                                <div>
+                                    <input type="file" class="form-control" id="payment_receipt_file"
+                                        name="payment_receipt_file" accept=".pdf,.png,.jpg,.jpeg">
+                                    <small class="form-text text-info">Or upload file directly (PDF, PNG, JPG
+                                        accepted)</small>
+                                </div>
+                                @error('payment_receipt_url')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                                @error('payment_receipt_file')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
+
                             <input type="hidden" name="total" value="{{ $total }}">
                             <button type="submit" class="theme-btn">Place Order</button>
                         </form>
@@ -105,7 +127,8 @@
                             <div class="payment-info">
                                 <p class="text-secondary"><strong>Bank Name:</strong> Meezan Bank</p>
                                 <p class="text-secondary"><strong>Account Holder:</strong> MUHAMMAD OWAIS QURNI</p>
-                                <p class="text-secondary"><strong>Account Number for Locals:</strong> 99780108468821</p>
+                                <p class="text-secondary"><strong>Account Number for Locals:</strong> 99780108468821
+                                </p>
                                 <p class="text-secondary"><strong>Account Number for International:</strong>
                                     PK57MEZN0099780108468821</p>
                                 {{-- <p class="text-secondary"><strong>SWIFT/BIC:</strong> XXXXXXXX</p> --}}

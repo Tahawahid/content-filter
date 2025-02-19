@@ -106,10 +106,16 @@
                                     </div>
                                 </div>
 
-                                <div class="hero-main-title text-center">
+                                {{-- <div class="hero-main-title text-center">
                                     <h1 class="hero-main-title-left font-medium text-white">On Click Generate <br>
                                         your favorite AI Image or <span class="word-piece-bg">Art</span></h1>
 
+                                </div> --}}
+                                <div class="hero-main-title text-center">
+                                    <h1 class="hero-main-title-left font-medium text-white">
+                                        {!! nl2br(e($banner->main_text ?? 'On Click Generate your favorite AI Image or')) !!}
+                                        <span class="word-piece-bg">{{ $banner->special_text ?? 'Art' }}</span>
+                                    </h1>
                                 </div>
                             </div>
                         </div>
@@ -120,7 +126,7 @@
         <!-- Header End -->
 
         <!-- Brand Logo Slider Area Start -->
-        <section class="brand-logo-slider-area home-2">
+        {{-- <section class="brand-logo-slider-area home-2">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
@@ -128,29 +134,48 @@
                             <h3 class="section-heading text-white">Supported by many companies around the <span
                                     class="word-piece-bg">world</span></h3>
                         </div>
+
                     </div>
                 </div>
 
                 <div class="row align-items-center">
                     <div class="col-12 col-carousel">
                         <div class="owl-carousel carousel-main brand-carousel brand-carousel-1">
-                            <div class="single-logo"><img src="{{ asset('assets/img/logo-slider2/1.png') }}"
+                            <div class="single-logo"><img src="{{ asset('assets/img/logo-slider2/1-1.png') }}"
                                     alt=""></div>
-                            <div class="single-logo"><img src="{{ asset('assets/img/logo-slider2/2.png') }}"
+                            <div class="single-logo"><img src="{{ asset('assets/img/logo-slider2/2-1.png') }}"
                                     alt=""></div>
-                            <div class="single-logo"><img src="{{ asset('assets/img/logo-slider2/3.png') }}"
+                            <div class="single-logo"><img src="{{ asset('assets/img/logo-slider2/3-1.png') }}"
                                     alt=""></div>
-                            <div class="single-logo"><img src="{{ asset('assets/img/logo-slider2/4.png') }}"
+                            <div class="single-logo"><img src="{{ asset('assets/img/logo-slider2/4-1.png') }}"
                                     alt=""></div>
-                            <div class="single-logo"><img src="{{ asset('assets/img/logo-slider2/5.png') }}"
+                            <div class="single-logo"><img src="{{ asset('assets/img/logo-slider2/1-1.png') }}"
                                     alt=""></div>
-                            <div class="single-logo"><img src="{{ asset('assets/img/logo-slider2/2.png') }}"
+                            <div class="single-logo"><img src="{{ asset('assets/img/logo-slider2/2-1.png') }}"
                                     alt=""></div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </section> --}}
+
+        <div class="section-title">
+            <h3 class="section-heading text-white">
+                {{ $brand->main_text ?? 'Supported by many companies around the' }}
+                <span class="word-piece-bg">{{ $brand->special_text ?? 'world' }}</span>
+            </h3>
+        </div>
+
+        <div class="owl-carousel carousel-main brand-carousel brand-carousel-1">
+            @if ($brand && $brand->images)
+                @foreach ($brand->images as $image)
+                    <div class="single-logo">
+                        <img src="{{ asset('storage/' . $image) }}" alt="brand logo">
+                    </div>
+                @endforeach
+            @endif
+        </div>
+
         <!-- Brand Logo Slider Area End -->
 
         <!-- Generate Content Area Start -->
@@ -162,63 +187,37 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="section-title">
-                            <h2 class="section-heading text-white">AiLand <span class="word-piece-bg">helps</span>
-                                you generate image & art</h2>
+                            <h2 class="section-heading text-white">{{ $feature->main_title ?? 'AiLand' }}
+                                <span class="word-piece-bg">{{ $feature->highlight_text ?? 'helps' }}</span>
+                            </h2>
                         </div>
                     </div>
                 </div>
                 <div class="generate-content-row-wrap">
-                    <div class="row">
-                        <div class="col-md-6 col-lg-4 mb-25">
-                            <div class="generate-content-box p-25">
-                                <div
-                                    class="generate-icon d-flex align-items-center justify-content-center rounded-circle color-heading mb-20">
-                                    <span class="iconify" data-icon="line-md:image"></span>
+                    <div class="row justify-content-center">
+                        @foreach ($boxes as $box)
+                            <div class="col-md-6 col-lg-4 mb-25">
+                                <div class="generate-content-box p-25">
+                                    <div
+                                        class="generate-icon d-flex align-items-center justify-content-center rounded-circle color-heading mb-20">
+                                        <img src="{{ asset('storage/' . $box['image']) }}" alt="{{ $box['title'] }}"
+                                            style="width: 48px; height: 48px; object-fit: contain;">
+                                    </div>
+                                    <h5 class="text-white mb-15">{{ $box['title'] }}</h5>
+                                    <p>{{ $box['description'] }}</p>
                                 </div>
-                                <h5 class="text-white mb-15">Custom Image</h5>
-                                <p>Create content efficiently
-                                    and quickly with great AI
-                                    writing tools.Create content efficiently
-                                    and quickly with great AI
-                                    writing tools.</p>
                             </div>
-                        </div>
-                        <div class="col-md-6 col-lg-4 mb-25">
-                            <div class="generate-content-box p-25">
-                                <div
-                                    class="generate-icon d-flex align-items-center justify-content-center rounded-circle color-heading mb-20">
-                                    <span class="iconify" data-icon="line-md:image-twotone"></span>
-                                </div>
-                                <h5 class="text-white mb-15">Custom Art</h5>
-                                <p>Create content efficiently
-                                    and quickly with great AI
-                                    writing tools.Create content efficiently
-                                    and quickly with great AI
-                                    writing tools.</p>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-4 mb-25">
-                            <div class="generate-content-box p-25">
-                                <div
-                                    class="generate-icon d-flex align-items-center justify-content-center rounded-circle color-heading mb-20">
-                                    <span class="iconify" data-icon="line-md:image"></span>
-                                </div>
-                                <h5 class="text-white mb-15">On-Click image import</h5>
-                                <p>Create content efficiently
-                                    and quickly with great AI
-                                    writing tools.Create content efficiently
-                                    and quickly with great AI
-                                    writing tools.</p>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
         </section>
+
+
         <!-- Generate Content Area End -->
 
         <!-- How It Works Area Start -->
-        <section id="how-it-works" class="how-it-works-area home-2  section-t-small-space position-relative">
+        {{-- <section id="how-it-works" class="how-it-works-area home-2  section-t-small-space position-relative">
             <img src="{{ asset('assets/img/home2-hero-floating-img.png') }}" alt="footer-bg"
                 class="footer-bg-img theme-common-floating-bg-img position-absolute img-fluid">
 
@@ -405,7 +404,52 @@
                 </div>
 
             </div>
+        </section> --}}
+        <section id="how-it-works" class="how-it-works-area home-2 section-t-small-space position-relative">
+            <img src="{{ asset('assets/img/home2-hero-floating-img.png') }}" alt="footer-bg"
+                class="footer-bg-img theme-common-floating-bg-img position-absolute img-fluid">
+
+            <div class="container position-relative">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="section-title">
+                            <h2 class="section-heading text-white">{{ $howItWorks->main_title ?? 'How It' }}
+                                <span class="word-piece-bg">{{ $howItWorks->highlight_text ?? 'Works' }}</span>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-10">
+                        <div class="video-container"
+                            style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+                            @php
+                                $videoUrl = $howItWorks->video_url ?? '';
+                                $videoId = '';
+
+                                if (
+                                    preg_match(
+                                        '/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/',
+                                        $videoUrl,
+                                        $match,
+                                    )
+                                ) {
+                                    $videoId = $match[1];
+                                }
+                            @endphp
+
+                            <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+                                src="https://www.youtube.com/embed/{{ $videoId }}" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
+
         <!-- How It Works Area End -->
 
         <!-- Pricing Area Start -->
@@ -471,7 +515,7 @@
             </div>
         </section> --}}
 
-        <section id="pricing" class="pricing-area home-2 bg-secondary section-t-space">
+        {{-- <section id="pricing" class="pricing-area home-2 bg-secondary section-t-space">
             @if ($packages->count() > 3)
                 <div class="d-flex justify-content-between mt-3">
                     <button class="carousel-control-prev" type="button" data-bs-target="#pricingCarousel"
@@ -570,7 +614,110 @@
                     </div>
                 </div>
             </div>
+        </section> --}}
+
+        <section id="pricing" class="pricing-area home-2 bg-secondary section-t-space">
+            <img src="{{ asset('assets/img/home2-hero-floating-img.png') }}" alt="footer-bg"
+                class="footer-bg-img theme-common-floating-bg-img position-absolute img-fluid">
+
+            <div class="pricing-area-bottom-part position-relative">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="section-title">
+                                <h2 class="section-heading text-white">Want More <span
+                                        class="word-piece-bg">Feature</span>? Try Premium!</h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 position-relative">
+                            <!-- Carousel Controls Outside -->
+                            @if ($packages->count() > 3)
+                                <button class="carousel-control-prev" type="button"
+                                    data-bs-target="#pricingCarousel" data-bs-slide="prev"
+                                    style="left: -50px; width: auto;">
+                                    <span class="carousel-control-prev-icon p-3 rounded-circle"
+                                        aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button"
+                                    data-bs-target="#pricingCarousel" data-bs-slide="next"
+                                    style="right: -50px; width: auto;">
+                                    <span class="carousel-control-next-icon p-3 rounded-circle"
+                                        aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            @endif
+
+                            <!-- Choose a plan content Start -->
+                            <div class="choose-plan-area">
+                                <div id="pricingCarousel" class="carousel slide" data-bs-ride="carousel"
+                                    data-bs-interval="3000">
+                                    <div class="carousel-inner">
+                                        @foreach ($packages->chunk(3) as $chunkIndex => $chunk)
+                                            <div class="carousel-item {{ $chunkIndex === 0 ? 'active' : '' }}">
+                                                <div class="row price-table-wrap">
+                                                    @foreach ($chunk as $package)
+                                                        <div class="col-md-6 col-lg-4 mb-25">
+                                                            <div
+                                                                class="price-card-item h-100 p-30 d-flex flex-column align-items-start justify-content-between">
+                                                                <!-- Package content remains the same -->
+                                                                <div class="w-100">
+                                                                    <h5 class="font-semi-bold text-white">
+                                                                        {{ $package->name }}</h5>
+                                                                    <hr>
+                                                                    <h2 class="price-title text-white mb-4">
+                                                                        ${{ $package->price }}<span
+                                                                            class="font-18 font-semi-bold">/m</span>
+                                                                    </h2>
+                                                                    <h5 class="font-semi-bold text-white mb-4">
+                                                                        Tokens: {{ $package->token }}
+                                                                    </h5>
+                                                                    <h5 class="font-semi-bold text-white mt-2">What's
+                                                                        included</h5>
+                                                                    <ul class="pricing-features">
+                                                                        @foreach ($package->features as $feature)
+                                                                            <li class="d-flex align-items-center mb-3">
+                                                                                <span
+                                                                                    class="price-check-icon flex-shrink-0 d-inline-flex align-items-center justify-content-center radius-50 me-2"></span>
+                                                                                <span
+                                                                                    class="flex-grow-1">{{ $feature }}</span>
+                                                                            </li>
+                                                                        @endforeach
+                                                                    </ul>
+                                                                </div>
+                                                                <form class="add-to-cart-form w-100"
+                                                                    action="{{ route('cart.store') }}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    <input type="hidden" name="id"
+                                                                        value="{{ $package->id }}">
+                                                                    <input type="hidden" name="name"
+                                                                        value="{{ $package->name }}">
+                                                                    <input type="hidden" name="price"
+                                                                        value="{{ $package->price }}">
+                                                                    <input type="hidden" name="tokens"
+                                                                        value="{{ $package->token }}">
+                                                                    <button type="submit" class="theme-btn w-100">Add
+                                                                        to Cart</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
+
 
         <!-- Pricing Area End -->
 
@@ -592,98 +739,37 @@
                         <div class="faq-content-box faq-left-part">
                             <!-- Accordion Start -->
                             <div class="accordion" id="accordionExample1">
-
-                                <div class="accordion-item">
-                                    <h5 class="accordion-header" id="headingOne">
-                                        <button class="accordion-button font-medium" type="button"
-                                            data-bs-toggle="collapse" data-bs-target="#collapseOne"
-                                            aria-expanded="true" aria-controls="collapseOne">
-                                            How to use chatgpt for content generate?
-                                        </button>
-                                    </h5>
-                                    <div id="collapseOne" class="accordion-collapse collapse show"
-                                        aria-labelledby="headingOne" data-bs-parent="#accordionExample1">
-                                        <div class="accordion-body">
-                                            Revolutionize your content with AI-powered copywriting. Unlock
-                                            creativity and efficiency to transform your messaging.
+                                @foreach ($faqs as $faq)
+                                    <div class="accordion-item">
+                                        <h5 class="accordion-header" id="heading{{ $faq->id }}">
+                                            <button
+                                                class="accordion-button font-medium {{ $loop->first ? '' : 'collapsed' }}"
+                                                type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#collapse{{ $faq->id }}"
+                                                aria-expanded="{{ $loop->first ? 'true' : 'false' }}"
+                                                aria-controls="collapse{{ $faq->id }}">
+                                                {{ $faq->question }}
+                                            </button>
+                                        </h5>
+                                        <div id="collapse{{ $faq->id }}"
+                                            class="accordion-collapse collapse {{ $loop->first ? 'show' : '' }}"
+                                            aria-labelledby="heading{{ $faq->id }}"
+                                            data-bs-parent="#accordionExample1">
+                                            <div class="accordion-body">
+                                                {{ $faq->answer }}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="accordion-item">
-                                    <h5 class="accordion-header" id="headingTwo">
-                                        <button class="accordion-button font-medium collapsed" type="button"
-                                            data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-                                            aria-expanded="false" aria-controls="collapseTwo">
-                                            How to generate article for ads?
-                                        </button>
-                                    </h5>
-                                    <div id="collapseTwo" class="accordion-collapse collapse"
-                                        aria-labelledby="headingTwo" data-bs-parent="#accordionExample1">
-                                        <div class="accordion-body">
-                                            Numquam eius modi tempora incidunt ut labore et lorem sit dolorequaerat
-                                            voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam
-                                            corporis lorem ipsum dolor sit
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-item">
-                                    <h5 class="accordion-header" id="headingThree">
-                                        <button class="accordion-button font-medium collapsed" type="button"
-                                            data-bs-toggle="collapse" data-bs-target="#collapseThree"
-                                            aria-expanded="false" aria-controls="collapseThree">
-                                            How to use chatgpt for content generate?
-                                        </button>
-                                    </h5>
-                                    <div id="collapseThree" class="accordion-collapse collapse"
-                                        aria-labelledby="headingThree" data-bs-parent="#accordionExample1">
-                                        <div class="accordion-body">
-                                            Numquam eius modi tempora incidunt ut labore et lorem sit dolorequaerat
-                                            voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam
-                                            corporis lorem ipsum dolor sit
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-item">
-                                    <h5 class="accordion-header" id="headingFour">
-                                        <button class="accordion-button font-medium collapsed" type="button"
-                                            data-bs-toggle="collapse" data-bs-target="#collapseFour"
-                                            aria-expanded="false" aria-controls="collapseFour">
-                                            How to generate article for ads?
-                                        </button>
-                                    </h5>
-                                    <div id="collapseFour" class="accordion-collapse collapse"
-                                        aria-labelledby="headingFour" data-bs-parent="#accordionExample1">
-                                        <div class="accordion-body">
-                                            Numquam eius modi tempora incidunt ut labore et lorem sit dolorequaerat
-                                            voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam
-                                            corporis lorem ipsum dolor sit
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-item">
-                                    <h5 class="accordion-header" id="headingFive">
-                                        <button class="accordion-button font-medium collapsed" type="button"
-                                            data-bs-toggle="collapse" data-bs-target="#collapseFive"
-                                            aria-expanded="false" aria-controls="collapseFive">
-                                            How to use chatgpt for content generate?
-                                        </button>
-                                    </h5>
-                                    <div id="collapseFive" class="accordion-collapse collapse"
-                                        aria-labelledby="headingFive" data-bs-parent="#accordionExample1">
-                                        <div class="accordion-body">
-                                            Numquam eius modi tempora incidunt ut labore et lorem sit dolorequaerat
-                                            voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam
-                                            corporis lorem ipsum dolor sit
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
+
                             <!-- Accordion End -->
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+
         <!-- FAQ Area End -->
 
         <!-- Customer Testimonial Area Start -->
@@ -703,144 +789,29 @@
                 <div class="row justify-content-center">
                     <div class="col-md-12">
                         <div class="owl-big owl-carousel owl-theme customer-testimonial-slider">
-                            <!-- Testimonial Item Start -->
-                            <div class="customer-testimonial-item position-relative radius-20 text-center">
-                                <div class="testimonial-top-part mb-3">
-                                    <div class="customer-testimonial-img position-relative">
-                                        <img src="{{ asset('assets/img/customer-testimonial/2.jpg') }}"
-                                            alt="" class="fit-image rounded-circle mx-auto mb-3">
-                                        <div>
-                                            <h5 class="testimonial-client-name">Ahmed Babar</h5>
-                                            <p class="color-heading">Businessman</p>
+                            @foreach ($testimonials as $testimonial)
+                                <div class="customer-testimonial-item position-relative radius-20 text-center">
+                                    <div class="testimonial-top-part mb-3">
+                                        <div class="customer-testimonial-img position-relative">
+                                            <img src="{{ asset('storage/' . $testimonial->image) }}" alt=""
+                                                class="fit-image rounded-circle mx-auto mb-3">
+                                            <div>
+                                                <h5 class="testimonial-client-name">{{ $testimonial->client_name }}
+                                                </h5>
+                                                <p class="color-heading">{{ $testimonial->designation }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="testimonial-quote position-relative">
+                                            <span class="iconify" data-icon="clarity:block-quote-line"></span>
                                         </div>
                                     </div>
-
-                                    <div class="testimonial-quote position-relative">
-                                        <span class="iconify" data-icon="clarity:block-quote-line"></span>
-                                    </div>
+                                    <h6 class="customer-testimonial-text font-bold position-relative">
+                                        {{ $testimonial->testimonial }}
+                                    </h6>
                                 </div>
-
-                                <h6 class="customer-testimonial-text font-bold position-relative"> Omnis iste natus
-                                    error sit
-                                    voluptatem accusantium doloremque laudantium, totam.</h6>
-                            </div>
-                            <!-- Testimonial Item End -->
-
-                            <!-- Testimonial Item Start -->
-                            <div class="customer-testimonial-item position-relative radius-20 text-center">
-                                <div class="testimonial-top-part mb-3">
-                                    <div class="customer-testimonial-img position-relative">
-                                        <img src="{{ asset('assets/img/customer-testimonial/1.jpg') }}"
-                                            alt="" class="fit-image rounded-circle mx-auto mb-3">
-                                        <div>
-                                            <h5 class="testimonial-client-name">Jacqueline Fernandez</h5>
-                                            <p class="color-heading">CTO</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="testimonial-quote position-relative">
-                                        <span class="iconify" data-icon="clarity:block-quote-line"></span>
-                                    </div>
-                                </div>
-
-                                <h6 class="customer-testimonial-text font-bold position-relative"> Omnis iste natus
-                                    error sit
-                                    voluptatem accusantium doloremque laudantium, totam.</h6>
-                            </div>
-                            <!-- Testimonial Item End -->
-
-                            <!-- Testimonial Item Start -->
-                            <div class="customer-testimonial-item position-relative radius-20 text-center">
-                                <div class="testimonial-top-part mb-3">
-                                    <div class="customer-testimonial-img position-relative">
-                                        <img src="{{ asset('assets/img/customer-testimonial/2.jpg') }}"
-                                            alt="" class="fit-image rounded-circle mx-auto mb-3">
-                                        <div>
-                                            <h5 class="testimonial-client-name">John Doe</h5>
-                                            <p class="color-heading">Businessman</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="testimonial-quote position-relative">
-                                        <span class="iconify" data-icon="clarity:block-quote-line"></span>
-                                    </div>
-                                </div>
-
-                                <h6 class="customer-testimonial-text font-bold position-relative"> Omnis iste natus
-                                    error sit
-                                    voluptatem accusantium doloremque laudantium, totam.</h6>
-                            </div>
-                            <!-- Testimonial Item End -->
-
-                            <!-- Testimonial Item Start -->
-                            <div class="customer-testimonial-item position-relative radius-20 text-center">
-                                <div class="testimonial-top-part mb-3">
-                                    <div class="customer-testimonial-img position-relative">
-                                        <img src="{{ asset('assets/img/customer-testimonial/2.jpg') }}"
-                                            alt="" class="fit-image rounded-circle mx-auto mb-3">
-                                        <div>
-                                            <h5 class="testimonial-client-name">Ahmed Babar</h5>
-                                            <p class="color-heading">Businessman</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="testimonial-quote position-relative">
-                                        <span class="iconify" data-icon="clarity:block-quote-line"></span>
-                                    </div>
-                                </div>
-
-                                <h6 class="customer-testimonial-text font-bold position-relative"> Omnis iste natus
-                                    error sit
-                                    voluptatem accusantium doloremque laudantium, totam.</h6>
-                            </div>
-                            <!-- Testimonial Item End -->
-
-                            <!-- Testimonial Item Start -->
-                            <div class="customer-testimonial-item position-relative radius-20 text-center">
-                                <div class="testimonial-top-part mb-3">
-                                    <div class="customer-testimonial-img position-relative">
-                                        <img src="{{ asset('assets/img/customer-testimonial/1.jpg') }}"
-                                            alt="" class="fit-image rounded-circle mx-auto mb-3">
-                                        <div>
-                                            <h5 class="testimonial-client-name">Jacqueline Fernandez</h5>
-                                            <p class="color-heading">CTO</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="testimonial-quote position-relative">
-                                        <span class="iconify" data-icon="clarity:block-quote-line"></span>
-                                    </div>
-                                </div>
-
-                                <h6 class="customer-testimonial-text font-bold position-relative"> Omnis iste natus
-                                    error sit
-                                    voluptatem accusantium doloremque laudantium, totam.</h6>
-                            </div>
-                            <!-- Testimonial Item End -->
-
-                            <!-- Testimonial Item Start -->
-                            <div class="customer-testimonial-item position-relative radius-20 text-center">
-                                <div class="testimonial-top-part mb-3">
-                                    <div class="customer-testimonial-img position-relative">
-                                        <img src="{{ asset('assets/img/customer-testimonial/1.jpg') }}"
-                                            alt="" class="fit-image rounded-circle mx-auto mb-3">
-                                        <div>
-                                            <h5 class="testimonial-client-name">John Doe</h5>
-                                            <p class="color-heading">Businessman</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="testimonial-quote position-relative">
-                                        <span class="iconify" data-icon="clarity:block-quote-line"></span>
-                                    </div>
-                                </div>
-
-                                <h6 class="customer-testimonial-text font-bold position-relative"> Omnis iste natus
-                                    error sit
-                                    voluptatem accusantium doloremque laudantium, totam.</h6>
-                            </div>
-                            <!-- Testimonial Item End -->
+                            @endforeach
                         </div>
+
                     </div>
                 </div>
             </div>

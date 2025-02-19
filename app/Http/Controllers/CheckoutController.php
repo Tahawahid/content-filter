@@ -101,6 +101,58 @@ class CheckoutController extends Controller
     //     return redirect()->route('cart.index')->with('success', 'Order placed successfully');
     // }
 
+    // public function store(Request $request)
+    // {
+    //     try {
+    //         DB::beginTransaction();
+
+    //         $validated = $request->validate([
+    //             'name' => 'required',
+    //             'phone' => 'required',
+    //             'email' => 'required|email',
+    //             'state' => 'required',
+    //             'city' => 'required',
+    //             'zipcode' => 'required',
+    //             'payment_receipt' => 'required|url'
+    //         ]);
+
+    //         $userDetails = UserDetail::create([
+    //             'user_id' => Auth::id(),
+    //             'name' => $validated['name'],
+    //             'phone_number' => $validated['phone'],
+    //             'email' => $validated['email'],
+    //             'state' => $validated['state'],
+    //             'city' => $validated['city'],
+    //             'zipcode' => $validated['zipcode'],
+    //         ]);
+
+    //         $receiptUrl = $request->payment_receipt;
+    //         $cartItems = session()->get('cart', []);
+
+    //         foreach ($cartItems as $item) {
+    //             $package = Package::findOrFail($item['id']);
+
+    //             Order::create([
+    //                 'user_id' => Auth::id(),
+    //                 'user_detail_id' => $userDetails->id,
+    //                 'package_id' => $package->id,
+    //                 'price' => $package->price,
+    //                 'status' => 'pending',
+    //                 'total' => $request->total,
+    //                 'tokens' => $package->token,
+    //                 'payment_receipt' => $receiptUrl
+    //             ]);
+    //         }
+
+    //         DB::commit();
+    //         session()->forget('cart');
+    //         return redirect()->route('cart.index')->with('success', 'Order placed successfully');
+    //     } catch (\Exception $e) {
+    //         DB::rollback();
+    //         return redirect()->back()->with('error', 'Order placement failed. Please try again.');
+    //     }
+    // }
+
     public function store(Request $request)
     {
         try {
@@ -113,7 +165,8 @@ class CheckoutController extends Controller
                 'state' => 'required',
                 'city' => 'required',
                 'zipcode' => 'required',
-                'payment_receipt' => 'required|url'
+                'payment_receipt_url' => 'required_without:payment_receipt_file|url|nullable',
+                'payment_receipt_file' => 'required_without:payment_receipt_url|file|mimes:pdf,png,jpg,jpeg|max:2048|nullable'
             ]);
 
             $userDetails = UserDetail::create([
@@ -126,12 +179,20 @@ class CheckoutController extends Controller
                 'zipcode' => $validated['zipcode'],
             ]);
 
-            $receiptUrl = $request->payment_receipt;
             $cartItems = session()->get('cart', []);
+            $receiptPath = null;
+
+            if ($request->hasFile('payment_receipt_file')) {
+                $file = $request->file('payment_receipt_file');
+                $filename = time() . '_' . Auth::id() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('receipts'), $filename);
+                $receiptPath = 'receipts/' . $filename;
+            } else {
+                $receiptPath = $request->payment_receipt_url;
+            }
 
             foreach ($cartItems as $item) {
                 $package = Package::findOrFail($item['id']);
-
                 Order::create([
                     'user_id' => Auth::id(),
                     'user_detail_id' => $userDetails->id,
@@ -140,7 +201,7 @@ class CheckoutController extends Controller
                     'status' => 'pending',
                     'total' => $request->total,
                     'tokens' => $package->token,
-                    'payment_receipt' => $receiptUrl
+                    'payment_receipt' => $receiptPath
                 ]);
             }
 

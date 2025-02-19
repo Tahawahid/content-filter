@@ -3,6 +3,38 @@
         <div class="bg-secondary text-center rounded p-4">
             <div class="d-flex align-items-center justify-content-between mb-4">
                 <h6 class="mb-0">Today's Orders</h6>
+                <div class="d-flex align-items-center">
+                    <form action="{{ route('orders.today') }}" method="GET" class="d-flex me-3">
+                        <input type="text" name="search" class="form-control bg-dark border-0 text-white"
+                            placeholder="Search today's orders..." value="{{ request('search') }}">
+                        <button type="submit" class="btn btn-primary ms-2">Search</button>
+                    </form>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <form action="{{ route('orders.today') }}" method="GET"
+                    class="d-flex justify-content-between align-items-center w-100 gap-3">
+                    <div class="d-flex gap-2">
+                        <select name="status" class="form-select bg-dark border-0 text-white">
+                            <option value="">All Status</option>
+                            <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending
+                            </option>
+                            <option value="approved" {{ request('status') == 'approved' ? 'selected' : '' }}>Approved
+                            </option>
+                            <option value="rejected" {{ request('status') == 'rejected' ? 'selected' : '' }}>Rejected
+                            </option>
+                            <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Active</option>
+                            <option value="on-hold" {{ request('status') == 'on-hold' ? 'selected' : '' }}>On Hold
+                            </option>
+                            <option value="cancelled" {{ request('status') == 'cancelled' ? 'selected' : '' }}>Cancelled
+                            </option>
+                        </select>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">Apply Filters</button>
+                        <a href="{{ route('orders.today') }}" class="btn btn-secondary">Reset</a>
+                    </div>
+                </form>
             </div>
             <div class="table-responsive">
                 <table class="table text-start align-middle table-bordered table-hover mb-0">

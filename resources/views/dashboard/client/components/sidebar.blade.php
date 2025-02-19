@@ -29,6 +29,10 @@
                 class="nav-item nav-link {{ request()->routeIs('content-filters.index') ? 'active' : '' }}">
                 <i class="fa fa-tachometer-alt me-2"></i>Send Request
             </a>
+            <a href="{{ route('content-filters.show', Auth::id()) }}"
+                class="nav-item nav-link {{ request()->routeIs('content-filters.show') ? 'active' : '' }}">
+                <i class="fa fa-tachometer-alt me-2"></i>All Request
+            </a>
         </div>
     </nav>
 </div>

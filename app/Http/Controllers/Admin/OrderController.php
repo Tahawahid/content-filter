@@ -15,13 +15,48 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    // public function index()
+    // {
+
+    //     $orders = Order::with(['userDetail', 'package'])
+    //         ->latest()
+    //         ->paginate(10);
+
+    //     return view('dashboard.admin.order.index', compact('orders'));
+    // }
+
+    public function index(Request $request)
     {
+        $query = Order::with(['userDetail', 'package']);
 
-        $orders = Order::with(['userDetail', 'package'])
-            ->latest()
-            ->paginate(10);
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->whereHas('userDetail', function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('phone_number', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
 
+        if ($request->has('date')) {
+            switch ($request->date) {
+                case 'today':
+                    $query->whereDate('created_at', today());
+                    break;
+                case 'week':
+                    $query->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()]);
+                    break;
+                case 'month':
+                    $query->whereMonth('created_at', now()->month);
+                    break;
+            }
+        }
+
+        if ($request->has('status') && $request->status) {
+            $query->where('status', $request->status);
+        }
+
+        $orders = $query->latest()->paginate(10);
         return view('dashboard.admin.order.index', compact('orders'));
     }
 
@@ -236,13 +271,35 @@ class OrderController extends Controller
         ]);
     }
 
-    public function todaysOrder()
-    {
-        $orders = Order::with(['userDetail', 'package'])
-            ->where('created_at', '>=', now()->subHours(36))
-            ->latest()
-            ->paginate(10);
+    // public function todaysOrder()
+    // {
+    //     $orders = Order::with(['userDetail', 'package'])
+    //         ->where('created_at', '>=', now()->subHours(36))
+    //         ->latest()
+    //         ->paginate(10);
 
+    //     return view('dashboard.admin.order.todaysOrder', compact('orders'));
+    // }
+
+    public function todaysOrder(Request $request)
+    {
+        $query = Order::with(['userDetail', 'package'])
+            ->where('created_at', '>=', now()->subHours(36));
+
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->whereHas('userDetail', function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('phone_number', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->has('status') && $request->status) {
+            $query->where('status', $request->status);
+        }
+
+        $orders = $query->latest()->paginate(10);
         return view('dashboard.admin.order.todaysOrder', compact('orders'));
     }
 }

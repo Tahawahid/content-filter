@@ -54,10 +54,11 @@
                     @guest
                         <ul class="navbar-nav mb-2 mb-lg-0 col-md-3 navbar-nav-right">
                             <li class="nav-item">
-                                <x-nav-link href="account/sign-up" :active="request()->is('account/sign-up')">Sign-up</x-nav-link>
+                                <x-nav-link href="{{ route('frontend.signUp') }}" :active="request()->is('account/sign-up')">Sign-up</x-nav-link>
                             </li>
                             <li class="nav-item">
-                                <x-nav-link href="account/sign-in" :active="request()->is('account/sign-in')" isButton="true">Login</x-nav-link>
+                                <x-nav-link href="{{ route('frontend.signIn') }}" :active="request()->is('account/sign-in')"
+                                    isButton="true">Login</x-nav-link>
                             </li>
                         </ul>
                     @endguest
@@ -71,11 +72,20 @@
                                 </a>
                                 <div
                                     class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                                    <a href="#" class="dropdown-item text-white">My Profile</a>
-                                    <a href="{{ route('dashboard.client.home') }}"
-                                        class="dropdown-item text-white">Dashboard</a>
-                                    <a href="{{ route('frontend.userLogout') }}" class="dropdown-item text-white">Log
-                                        Out</a>
+                                    @if (auth('admin')->check())
+                                        <a href="{{ route('admin.profile.edit') }}" class="dropdown-item text-white">My
+                                            Profile</a>
+                                        <a href="{{ route('dashboard.admin.home') }}"
+                                            class="dropdown-item text-white">Dashboard</a>
+                                        <a href="{{ route('dashboard.admin.logout') }}" class="dropdown-item text-white">Log
+                                            Out</a>
+                                    @else
+                                        <a href="{{ route('profile') }}" class="dropdown-item text-white">My Profile</a>
+                                        <a href="{{ route('dashboard.client.home') }}"
+                                            class="dropdown-item text-white">Dashboard</a>
+                                        <a href="{{ route('frontend.userLogout') }}" class="dropdown-item text-white">Log
+                                            Out</a>
+                                    @endif
                                 </div>
                             </div>
                         </div>
